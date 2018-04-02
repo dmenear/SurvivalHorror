@@ -7,9 +7,13 @@ public class DoorCellOpen : MonoBehaviour {
 
 	public float TheDistance;
 	public GameObject TheDoor, TextBox;
-	public AudioSource CreakSound;
-	public AudioClip SlamSound, LockedSound;
-	public bool DoorOpen = false, StateChanging = false, DoorSlam = false, DoorLocked = false, displayingText = false;
+	AudioSource audio;
+	public AudioClip CreakSound, SlamSound, LockedSound;
+	public bool DoorOpen = false, StateChanging = false, DoorSlam = false, DoorLocked = false, displayingText = false, slamBehind = false;
+
+	void Start(){
+		audio = TheDoor.GetComponent<AudioSource> ();
+	}
 
 	void Update () {
 		TheDistance = PlayerCasting.DistanceFromTarget;
@@ -20,18 +24,18 @@ public class DoorCellOpen : MonoBehaviour {
 			if (Input.GetButtonDown ("Action")) {
 				if (!DoorLocked) {
 					TheDoor.GetComponent<Animation> ().Play ("FirstDoorOpenAnim");
-					CreakSound.Play ();
+					audio.PlayOneShot (CreakSound, 0.7f);
 					StartCoroutine (SetStateChanging (1.5f, true));
 				} else {
 					if (!displayingText) {
-						CreakSound.PlayOneShot (LockedSound, 0.6f);
+						audio.PlayOneShot (LockedSound, 0.7f);
 						StartCoroutine (DisplayDoorLocked ());
 					}
 				}
 			}
 		} else if(TheDistance <= 2.3 && DoorOpen && !StateChanging){
 			if (Input.GetButtonDown ("Action")) {
-				CreakSound.Play ();
+				audio.PlayOneShot (CreakSound, 0.7f);
 				if (DoorSlam) {
 					StartCoroutine (PlaySlamSound ());
 					TheDoor.GetComponent<Animation> ().Play ("DoorSlamAnim");
@@ -53,7 +57,7 @@ public class DoorCellOpen : MonoBehaviour {
 
 	IEnumerator PlaySlamSound(){
 		yield return new WaitForSecondsRealtime (0.45f);
-		CreakSound.PlayOneShot (SlamSound, 1.0f);
+		audio.PlayOneShot (SlamSound, 1.0f);
 	}
 
 	IEnumerator DisplayDoorLocked(){
@@ -62,5 +66,11 @@ public class DoorCellOpen : MonoBehaviour {
 		yield return new WaitForSecondsRealtime (3.0f);
 		displayingText = false;
 		TextBox.GetComponent<Text> ().text = "";
+	}
+
+	public void SlamBehind(){
+		StartCoroutine (PlaySlamSound ());
+		TheDoor.GetComponent<Animation> ().Play ("DoorSlamAnim");
+		StartCoroutine (SetStateChanging (0.5f, false));
 	}
 }
