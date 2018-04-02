@@ -7,6 +7,7 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class GameStateManager : MonoBehaviour {
 
 	public GameObject monsters, player;
+	public bool paused = false;
 
 	// Use this for initialization
 	void Start () {
