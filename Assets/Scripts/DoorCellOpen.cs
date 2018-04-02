@@ -9,7 +9,7 @@ public class DoorCellOpen : MonoBehaviour {
 	public GameObject TheDoor, TextBox;
 	public AudioSource CreakSound;
 	public AudioClip SlamSound, LockedSound;
-	public bool DoorOpen = false, StateChanging = false, DoorSlam = false, DoorLocked = false;
+	public bool DoorOpen = false, StateChanging = false, DoorSlam = false, DoorLocked = false, displayingText = false;
 
 	void Update () {
 		TheDistance = PlayerCasting.DistanceFromTarget;
@@ -23,8 +23,10 @@ public class DoorCellOpen : MonoBehaviour {
 					CreakSound.Play ();
 					StartCoroutine (SetStateChanging (1.5f, true));
 				} else {
-					CreakSound.PlayOneShot (LockedSound, 0.6f);
-					StartCoroutine (DisplayDoorLocked ());
+					if (!displayingText) {
+						CreakSound.PlayOneShot (LockedSound, 0.6f);
+						StartCoroutine (DisplayDoorLocked ());
+					}
 				}
 			}
 		} else if(TheDistance <= 2.3 && DoorOpen && !StateChanging){
@@ -56,7 +58,9 @@ public class DoorCellOpen : MonoBehaviour {
 
 	IEnumerator DisplayDoorLocked(){
 		TextBox.GetComponent<Text> ().text = "This door is locked.";
+		displayingText = true;
 		yield return new WaitForSecondsRealtime (3.0f);
+		displayingText = false;
 		TextBox.GetComponent<Text> ().text = "";
 	}
 }
