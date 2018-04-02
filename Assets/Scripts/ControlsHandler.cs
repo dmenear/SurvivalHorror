@@ -8,12 +8,10 @@ public class ControlsHandler : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.Tab)) {
-			if (controlsPanel.activeSelf) {
-				controlsPanel.SetActive (false);
-			} else {
-				controlsPanel.SetActive (true);
-			}
+		if ((Input.GetKeyDown (KeyCode.Tab) || Input.GetButtonDown("Menu")) && controlsPanel.activeSelf) {
+			controlsPanel.SetActive (false);
+		} else if (Input.GetKeyDown (KeyCode.Tab) && !controlsPanel.activeSelf) {
+			controlsPanel.SetActive (true);
 		}
 	}
 }
