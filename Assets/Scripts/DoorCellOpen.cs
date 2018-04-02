@@ -35,14 +35,17 @@ public class DoorCellOpen : MonoBehaviour {
 			}
 		} else if(TheDistance <= 2.3 && DoorOpen && !StateChanging){
 			if (Input.GetButtonDown ("Action")) {
-				audio.PlayOneShot (CreakSound, 0.7f);
 				if (DoorSlam) {
+					audio.PlayOneShot (CreakSound, 0.7f);
 					StartCoroutine (PlaySlamSound ());
 					TheDoor.GetComponent<Animation> ().Play ("DoorSlamAnim");
 					StartCoroutine (SetStateChanging (0.5f, false));
 				} else {
-					TheDoor.GetComponent<Animation> ().Play ("FirstDoorCloseAnim");
-					StartCoroutine (SetStateChanging (1.0f, false));
+					if (!slamBehind){
+						audio.PlayOneShot (CreakSound, 0.7f);
+						TheDoor.GetComponent<Animation> ().Play ("FirstDoorCloseAnim");
+						StartCoroutine (SetStateChanging (1.0f, false));
+					}
 				}
 			}
 		}
