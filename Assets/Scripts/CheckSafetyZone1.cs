@@ -13,7 +13,7 @@ public class CheckSafetyZone1 : MonoBehaviour {
 	}
 
 	void Update(){
-		if (inZone.Contains (player) && !inZone.Contains (monster)) {
+		if (!inZone.Contains (player) && inZone.Contains (monster)) {
 			inSafetyZone1 = true;
 		} else {
 			inSafetyZone1 = false;
