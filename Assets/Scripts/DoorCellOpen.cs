@@ -6,10 +6,11 @@ using UnityEngine.UI;
 public class DoorCellOpen : MonoBehaviour {
 
 	public float TheDistance;
-	public GameObject TheDoor, TextBox;
+	public GameObject TheDoor, TextBox, monster;
 	AudioSource audio;
-	public AudioClip CreakSound, SlamSound, LockedSound;
-	public bool DoorOpen = false, StateChanging = false, DoorSlam = false, DoorLocked = false, displayingText = false, slamBehind = false;
+	public AudioClip CreakSound, SlamSound, LockedSound, PrisonOpen, PrisonClose;
+	public bool DoorOpen = false, StateChanging = false, DoorSlam = false, DoorLocked = false, displayingText = false, slamBehind = false, isPrison = false, complete = false;
+	public MusicController music;
 
 	void Start(){
 		audio = TheDoor.GetComponent<AudioSource> ();
@@ -20,12 +21,18 @@ public class DoorCellOpen : MonoBehaviour {
 	}
 
 	void OnMouseOver (){
-		if (TheDistance <= 2.3 && !DoorOpen && !StateChanging) {
+		if (TheDistance <= 2.5 && !DoorOpen && !StateChanging) {
 			if (Input.GetButtonDown ("Action")) {
 				if (!DoorLocked) {
-					TheDoor.GetComponent<Animation> ().Play ("FirstDoorOpenAnim");
-					audio.PlayOneShot (CreakSound, 0.7f);
-					StartCoroutine (SetStateChanging (1.5f, true));
+					if (isPrison) {
+						TheDoor.GetComponent<Animation> ().Play ("PrisonDoorOpen");
+						audio.PlayOneShot (PrisonOpen, 0.7f);
+						StartCoroutine (SetStateChanging (1.5f, true));
+					} else {
+						TheDoor.GetComponent<Animation> ().Play ("FirstDoorOpenAnim");
+						audio.PlayOneShot (CreakSound, 0.7f);
+						StartCoroutine (SetStateChanging (1.5f, true));
+					}
 				} else {
 					if (!displayingText) {
 						audio.PlayOneShot (LockedSound, 0.7f);
@@ -33,22 +40,40 @@ public class DoorCellOpen : MonoBehaviour {
 					}
 				}
 			}
-		} else if(TheDistance <= 2.3 && DoorOpen && !StateChanging){
+		} else if(TheDistance <= 3.0 && DoorOpen && !StateChanging){
 			if (Input.GetButtonDown ("Action")) {
 				if (DoorSlam) {
-					audio.PlayOneShot (CreakSound, 0.7f);
-					StartCoroutine (PlaySlamSound ());
-					TheDoor.GetComponent<Animation> ().Play ("DoorSlamAnim");
-					StartCoroutine (SetStateChanging (0.5f, false));
+					if (!CheckAttackZone1.inAttackZone) {
+						audio.PlayOneShot (CreakSound, 0.7f);
+						StartCoroutine (PlaySlamSound ());
+						TheDoor.GetComponent<Animation> ().Play ("DoorSlamAnim");
+						StartCoroutine (SetStateChanging (0.5f, false));
+						if (complete) {
+							GetComponent<DoorCellOpen> ().enabled = false;
+							StartCoroutine (killMonster ());
+						}
+					}
 				} else {
 					if (!slamBehind){
-						audio.PlayOneShot (CreakSound, 0.7f);
-						TheDoor.GetComponent<Animation> ().Play ("FirstDoorCloseAnim");
-						StartCoroutine (SetStateChanging (1.0f, false));
+						if (isPrison) {
+							TheDoor.GetComponent<Animation> ().Play ("PrisonDoorClose");
+							audio.PlayOneShot (PrisonClose, 0.7f);
+							StartCoroutine (SetStateChanging (1.0f, false));
+						} else {
+							audio.PlayOneShot (CreakSound, 0.7f);
+							TheDoor.GetComponent<Animation> ().Play ("FirstDoorCloseAnim");
+							StartCoroutine (SetStateChanging (1.0f, false));
+						}
 					}
 				}
 			}
 		}
+	}
+
+	IEnumerator killMonster(){
+		yield return new WaitForSecondsRealtime (0.5f);
+		music.changeToAmbient ();
+		Destroy (monster);
 	}
 
 	IEnumerator SetStateChanging(float changeTime, bool newState) {

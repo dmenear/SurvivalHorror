@@ -55,7 +55,6 @@ public class Monster1Movement : MonoBehaviour {
 	void OnCollisionEnter(Collision other){
 		if(other.gameObject == player.gameObject && !killed){
 			killed = true;
-			player.Find ("Flashlight").gameObject.SetActive (false);
 			jumpScare.SetActive (true);
 			music.audio.Stop ();
 			audioJumpScare.PlayOneShot (jumpScareSound, 1.0f);
