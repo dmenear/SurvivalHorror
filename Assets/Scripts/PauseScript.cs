@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityStandardAssets.Characters.FirstPerson;
@@ -10,25 +11,48 @@ public class PauseScript : MonoBehaviour
     public GameObject pauseMenu, player;
 	public GameStateManager stateManager;
 
-    private void Update()
+	void Start(){
+		Cursor.lockState = CursorLockMode.Locked;
+		Cursor.visible = false;
+	}
+
+    void Update()
     {
         if (Input.GetButtonDown("Menu") && !pauseMenu.activeSelf)
         {
             pauseMenu.SetActive(true);
             player.GetComponent<FirstPersonController>().enabled = false;
-            Cursor.visible = true;
 			stateManager.paused = true;
+			SetCursorLockState (false);
             Time.timeScale = 0;
         }
         else if (Input.GetButtonDown("Menu") && pauseMenu.activeSelf)
         {
+			Time.timeScale = 1;
+			player.GetComponent<FirstPersonController>().enabled = true;
             pauseMenu.SetActive(false);
-            player.GetComponent<FirstPersonController>().enabled = true;
-            Cursor.visible = false;
 			stateManager.paused = false;
-            Time.timeScale = 1;
+			SetCursorLockState (true);
         }
     }
+
+	void SetCursorLockState(bool val){
+		if (val) {
+			Cursor.visible = false;
+			Cursor.lockState = CursorLockMode.Locked;
+		} else {
+			Cursor.visible = true;
+			Cursor.lockState = CursorLockMode.None;
+		}
+	}
+
+	public void Resume(){
+		Time.timeScale = 1;
+		player.GetComponent<FirstPersonController>().enabled = true;
+		pauseMenu.SetActive(false);
+		stateManager.paused = false;
+		SetCursorLockState (true);
+	}
 
     public void Restart()
     {
