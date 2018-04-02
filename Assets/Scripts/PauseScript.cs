@@ -58,6 +58,9 @@ public class PauseScript : MonoBehaviour
     {
         Time.timeScale = 1;
 		stateManager.paused = false;
+		CheckAttackZone.inAttackZone = false;
+		CheckAttackZone1.inAttackZone = false;
+		CheckSafetyZone1.inSafetyZone1 = false;
         SceneManager.LoadScene("Scene001");
     }
 

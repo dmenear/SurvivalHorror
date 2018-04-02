@@ -9,7 +9,7 @@ public class CheckAttackZone : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		inAttackZone = false;
 	}
 	
 	// Update is called once per frame

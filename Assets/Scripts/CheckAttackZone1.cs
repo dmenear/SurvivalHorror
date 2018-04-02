@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class CheckAttackZone1 : MonoBehaviour {
 
-	public static bool inAttackZone = false;
+	public static bool inAttackZone;
 	public GameObject player;
 
 	// Use this for initialization
 	void Start () {
-		
+		inAttackZone = false;
 	}
 	
 	// Update is called once per frame

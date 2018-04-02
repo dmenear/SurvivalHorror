@@ -43,7 +43,6 @@ public class Monster2Controller : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision other){
-		Debug.Log ("test");
 		if(other.gameObject == player.gameObject && !killed){
 			killed = true;
 			jumpScare.SetActive (true);
