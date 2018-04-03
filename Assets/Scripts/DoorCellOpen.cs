@@ -49,8 +49,9 @@ public class DoorCellOpen : MonoBehaviour {
 						TheDoor.GetComponent<Animation> ().Play ("DoorSlamAnim");
 						StartCoroutine (SetStateChanging (0.5f, false));
 						if (complete) {
-							GetComponent<DoorCellOpen> ().enabled = false;
 							StartCoroutine (killMonster ());
+							GetComponent<DoorCellOpen> ().DoorLocked = true;
+
 						}
 					}
 				} else {

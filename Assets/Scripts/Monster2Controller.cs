@@ -8,11 +8,12 @@ public class Monster2Controller : MonoBehaviour {
 	public GameObject player, flashlight, door, jumpScare;
 	string state;
 	public Vector3 startPosition;
-	bool killed = false;
+	bool killed = false, upClosePlayed = false;
 	public GameStateManager stateManager;
-	AudioSource audioJumpScare;
-	public AudioClip jumpScareSound;
+	AudioSource audioJumpScare, audio;
+	public AudioClip jumpScareSound, spiderRoar, spiderUpClose;
 	public MusicController music;
+	public float mag;
 
 	// Use this for initialization
 	void Start () {
@@ -20,12 +21,18 @@ public class Monster2Controller : MonoBehaviour {
 		state = "idle";
 		startPosition = transform.position;
 		audioJumpScare = stateManager.GetComponent<AudioSource> ();
+		audio = GetComponent<AudioSource> ();
 	}
 
 	//Update is called once per frame
 	void Update () {
 		Vector3 direction = player.transform.position - this.transform.position;
 		direction.y = 0;
+		mag = direction.magnitude;
+		if (direction.magnitude <= 9 && !upClosePlayed) {
+			upClosePlayed = true;
+			StartCoroutine (upCloseSound());
+		}
 		this.transform.rotation = Quaternion.Slerp (this.transform.rotation, Quaternion.LookRotation (direction), 0.1f);
 		if (flashlight.activeSelf && !anim.GetBool ("isChasing") && (CheckAttackZone.inAttackZone || CheckAttackZone1.inAttackZone)) {
 			anim.SetBool ("isChasing", true);
@@ -38,7 +45,7 @@ public class Monster2Controller : MonoBehaviour {
 			transform.position = new Vector3 (transform.position.x, transform.position.y, door.transform.position.z);
 		}
 		if (state == "chase") {
-			this.transform.Translate (0, 0, 10f * Time.deltaTime);
+			this.transform.Translate (0, 0, 9f * Time.deltaTime);
 		}
 	}
 
@@ -50,5 +57,14 @@ public class Monster2Controller : MonoBehaviour {
 			audioJumpScare.PlayOneShot (jumpScareSound, 1.0f);
 			stateManager.EndGame ();
 		}
+	}
+
+	public void roar(){
+		audio.PlayOneShot (spiderRoar, 1.0f);
+	}
+
+	IEnumerator upCloseSound(){
+		audio.PlayOneShot (spiderUpClose, 0.8f);
+		yield return new WaitForSecondsRealtime (10.0f);
 	}
 }

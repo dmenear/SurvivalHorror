@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class PickUpKey2 : MonoBehaviour {
 
-	public GameObject player, textBox, monster, zoneExpansion, exitDoor, newDoor;
-	public GameObject[] keyMeshes;
+	public GameObject player, textBox, monster, zoneExpansion, exitDoor, newDoor, skeleton, scareTrigger;
+	public GameObject[] keyMeshes, torches, torchLights, torchFlames;
 	public AudioClip pickup;
 	public AudioSource audio;
 	public float distance, angle;
@@ -32,6 +32,17 @@ public class PickUpKey2 : MonoBehaviour {
 				pickedUp = true;
 				monster.transform.position = monster.GetComponent<Monster2Controller> ().startPosition;
 				zoneExpansion.SetActive (true);
+				foreach (GameObject torch in torches) {
+					torch.GetComponent<FlameAnimations> ().enabled = false;
+				}
+				foreach (GameObject torchFlame in torchFlames) {
+					torchFlame.GetComponent<ParticleSystem> ().Stop ();
+				}
+				foreach (GameObject torchLight in torchLights) {
+					torchLight.GetComponent<Animation> ().Play ("BurnOut");
+				}
+				skeleton.SetActive (true);
+				scareTrigger.SetActive (true);
 			}
 		}
 	}

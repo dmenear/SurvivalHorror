@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SlamBehind : MonoBehaviour {
 
-	public GameObject door, player;
+	public GameObject door, player, monster;
 	public bool spider;
 	public MusicController music;
 
@@ -30,7 +30,9 @@ public class SlamBehind : MonoBehaviour {
 	}
 
 	IEnumerator playSpiderMusic(){
-		yield return new WaitForSecondsRealtime (0.7f);
+		yield return new WaitForSecondsRealtime (1.0f);
+		monster.GetComponent<Monster2Controller> ().roar ();
+		yield return new WaitForSecondsRealtime (1.5f);
 		music.changeToSpider ();
 	}
 }
