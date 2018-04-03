@@ -25,6 +25,10 @@ public class GameStateManager : MonoBehaviour {
 		StartCoroutine (restart ());
 	}
 
+	public void Victory(){
+	
+	}
+
 	IEnumerator restart(){
 		yield return new WaitForSeconds (8.1f);
 		SceneManager.LoadScene (SceneManager.GetActiveScene().name);
