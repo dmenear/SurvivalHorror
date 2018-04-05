@@ -63,7 +63,7 @@ public class Monster1Movement : MonoBehaviour {
 	}
 
 	IEnumerator PeriodicSound(){
-		yield return new WaitForSeconds (4f);
+		yield return new WaitForSecondsRealtime (4f);
 		int sound = Random.Range (0, 3);
 		switch (sound) {
 		case 0:

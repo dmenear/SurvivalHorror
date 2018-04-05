@@ -26,7 +26,7 @@ public class GameStateManager : MonoBehaviour {
 	}
 
 	public void Victory(){
-	
+		
 	}
 
 	IEnumerator restart(){

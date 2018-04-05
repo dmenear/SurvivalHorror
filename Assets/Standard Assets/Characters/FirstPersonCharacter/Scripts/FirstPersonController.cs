@@ -82,7 +82,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
 					flashlight.GetComponent<Animation> ().Play ("FlashlightFlicker");
 				}
 			}
-			flashlight.transform.rotation = m_Camera.transform.rotation;
 
             RotateView();
             // the jump state needs to read here to make sure it is not missed
