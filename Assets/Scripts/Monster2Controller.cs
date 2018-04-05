@@ -54,7 +54,7 @@ public class Monster2Controller : MonoBehaviour {
 			killed = true;
 			jumpScare.SetActive (true);
 			music.audio.Stop ();
-			audioJumpScare.PlayOneShot (jumpScareSound, 1.0f);
+			audioJumpScare.PlayOneShot (jumpScareSound, 1.5f);
 			stateManager.EndGame ();
 		}
 	}
