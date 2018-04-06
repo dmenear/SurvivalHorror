@@ -17,11 +17,11 @@ TagManager:
   - LightFix
   - FireLayer
   - MazeRoof
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Monster
+  - MonsterNoCollision
+  - Doors
+  - Player
+  - MovingDoor
   - 
   - 
   - 

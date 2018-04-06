@@ -50,7 +50,7 @@ public class Monster2Controller : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision other){
-		if(other.gameObject == player.gameObject && !killed){
+		if (other.gameObject == player.gameObject && !killed) {
 			killed = true;
 			jumpScare.SetActive (true);
 			music.audio.Stop ();

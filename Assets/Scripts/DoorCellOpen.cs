@@ -5,19 +5,23 @@ using UnityEngine.UI;
 
 public class DoorCellOpen : MonoBehaviour {
 
-	public float TheDistance;
-	public GameObject TheDoor, TextBox, monster;
+	public float TheDistance, angle;
+	public GameObject TheDoor, TextBox, monster, player;
 	AudioSource audio;
 	public AudioClip CreakSound, SlamSound, LockedSound, PrisonOpen, PrisonClose;
 	public bool DoorOpen = false, StateChanging = false, DoorSlam = false, DoorLocked = false, displayingText = false, slamBehind = false, isPrison = false, complete = false;
 	public MusicController music;
+	bool openedOpposite;
 
 	void Start(){
 		audio = TheDoor.GetComponent<AudioSource> ();
+		openedOpposite = false;
 	}
 
 	void Update () {
 		TheDistance = PlayerCasting.DistanceFromTarget;
+		Vector3 direction = player.transform.position - this.transform.position;
+		angle = Vector3.SignedAngle (direction, this.transform.forward, Vector3.up);
 	}
 
 	void OnMouseOver (){
@@ -29,7 +33,13 @@ public class DoorCellOpen : MonoBehaviour {
 						audio.PlayOneShot (PrisonOpen, 0.7f);
 						StartCoroutine (SetStateChanging (1.5f, true));
 					} else {
-						TheDoor.GetComponent<Animation> ().Play ("FirstDoorOpenAnim");
+						if (angle < 0) {
+							TheDoor.GetComponent<Animation> ().Play ("FirstDoorOpenAnim");
+							openedOpposite = false;
+						} else {
+							TheDoor.GetComponent<Animation> ().Play ("DoorOpenOpposite");
+							openedOpposite = true;
+						}
 						audio.PlayOneShot (CreakSound, 0.7f);
 						StartCoroutine (SetStateChanging (1.5f, true));
 					}
@@ -46,7 +56,11 @@ public class DoorCellOpen : MonoBehaviour {
 					if (!CheckAttackZone1.inAttackZone) {
 						audio.PlayOneShot (CreakSound, 0.7f);
 						StartCoroutine (PlaySlamSound ());
-						TheDoor.GetComponent<Animation> ().Play ("DoorSlamAnim");
+						if (openedOpposite) {
+							TheDoor.GetComponent<Animation> ().Play ("DoorSlamOpposite");
+						} else {	
+							TheDoor.GetComponent<Animation> ().Play ("DoorSlamAnim");
+						}
 						StartCoroutine (SetStateChanging (0.5f, false));
 						if (complete) {
 							StartCoroutine (killMonster ());
@@ -62,7 +76,11 @@ public class DoorCellOpen : MonoBehaviour {
 							StartCoroutine (SetStateChanging (1.0f, false));
 						} else {
 							audio.PlayOneShot (CreakSound, 0.7f);
-							TheDoor.GetComponent<Animation> ().Play ("FirstDoorCloseAnim");
+							if (openedOpposite) {
+								TheDoor.GetComponent<Animation> ().Play ("DoorCloseOpposite");
+							} else {
+								TheDoor.GetComponent<Animation> ().Play ("FirstDoorCloseAnim");
+							}
 							StartCoroutine (SetStateChanging (1.0f, false));
 						}
 					}
@@ -101,5 +119,12 @@ public class DoorCellOpen : MonoBehaviour {
 		StartCoroutine (PlaySlamSound ());
 		TheDoor.GetComponent<Animation> ().Play ("DoorSlamAnim");
 		StartCoroutine (SetStateChanging (0.5f, false));
+	}
+
+	void SetLayerRecursively(GameObject obj, int layer){
+		obj.layer = layer;
+		foreach(Transform child in obj.transform){
+			SetLayerRecursively (child.gameObject, layer);
+		}
 	}
 }
