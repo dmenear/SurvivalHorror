@@ -18,7 +18,6 @@ public class Monster2Controller : MonoBehaviour {
 	float mag;
 
 
-
 	// Use this for initialization
 	void Start () {
 		killed = false;
