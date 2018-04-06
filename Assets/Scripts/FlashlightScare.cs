@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class FlashlightScare : MonoBehaviour {
 
-	public GameObject player, flashlight, skeleton;
-	public AudioClip flicker;
+	public GameObject Player, Flashlight, Skeleton;
+	public AudioClip Flicker;
+
 	bool triggered;
 
 	void Start(){
@@ -13,21 +14,21 @@ public class FlashlightScare : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other){
-		if (!triggered && other.gameObject == player.gameObject) {
+		if (!triggered && other.gameObject == Player.gameObject) {
 			triggered = true;
 			StartCoroutine (playScare ());
 		}
 	}
 
 	IEnumerator playScare(){
-		flashlight.GetComponent<Animation> ().Play ("FlashlightFlicker");
-		player.GetComponents<AudioSource>()[1].PlayOneShot (flicker, 0.7f);
+		Flashlight.GetComponent<Animation> ().Play ("FlashlightFlicker");
+		Player.GetComponents<AudioSource>()[1].PlayOneShot (Flicker, 0.7f);
 		yield return new WaitForSecondsRealtime (0.3f);
-		flashlight.GetComponent<Light> ().enabled = false;
-		skeleton.SetActive (false);
+		Flashlight.GetComponent<Light> ().enabled = false;
+		Skeleton.SetActive (false);
 		yield return new WaitForSecondsRealtime (5.0f);
-		flashlight.SetActive (true);
-		flashlight.GetComponent<Light> ().enabled = true;
-		player.GetComponents<AudioSource>()[1].PlayOneShot (flicker, 0.7f);
+		Flashlight.SetActive (true);
+		Flashlight.GetComponent<Light> ().enabled = true;
+		Player.GetComponents<AudioSource>()[1].PlayOneShot (Flicker, 0.7f);
 	}
 }

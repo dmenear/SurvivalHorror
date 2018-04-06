@@ -8,20 +8,10 @@ public class SlamBehind : MonoBehaviour {
 	public bool spider;
 	public MusicController music;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
 	void OnTriggerEnter(Collider other){
-		if (other.gameObject == player.gameObject && door.GetComponent<DoorCellOpen>().slamBehind) {
-			door.GetComponent<DoorCellOpen> ().slamBehind = false;
-			door.GetComponent<DoorCellOpen> ().SlamBehind ();
+		if (other.gameObject == player.gameObject && door.GetComponent<DoorCellOpen>().SlamBehind) {
+			door.GetComponent<DoorCellOpen> ().SlamBehind = false;
+			door.GetComponent<DoorCellOpen> ().SlamDoorBehind ();
 			door.GetComponent<DoorCellOpen> ().DoorLocked = true;
 			if (spider) {
 				StartCoroutine (playSpiderMusic ());
@@ -31,7 +21,7 @@ public class SlamBehind : MonoBehaviour {
 
 	IEnumerator playSpiderMusic(){
 		yield return new WaitForSecondsRealtime (1.0f);
-		monster.GetComponent<Monster2Controller> ().roar ();
+		monster.GetComponent<Monster2Controller> ().Roar ();
 		yield return new WaitForSecondsRealtime (1.5f);
 		music.changeToSpider ();
 	}

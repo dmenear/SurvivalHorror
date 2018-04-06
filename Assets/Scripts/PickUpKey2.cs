@@ -23,14 +23,14 @@ public class PickUpKey2 : MonoBehaviour {
 				displayMessage ();
 				exitDoor.GetComponent<DoorCellOpen> ().DoorLocked = false;
 				exitDoor.GetComponent<DoorCellOpen> ().DoorSlam = true;
-				exitDoor.GetComponent<DoorCellOpen> ().complete = true;
+				exitDoor.GetComponent<DoorCellOpen> ().Complete = true;
 				newDoor.GetComponent<DoorCellOpen> ().DoorLocked = false;
 				foreach (GameObject keyMesh in keyMeshes) { 
 					keyMesh.GetComponent<MeshRenderer> ().enabled = false;
 				}
 				StartCoroutine (displayMessage());
 				pickedUp = true;
-				monster.transform.position = monster.GetComponent<Monster2Controller> ().startPosition;
+				monster.transform.position = monster.GetComponent<Monster2Controller> ().StartPosition;
 				zoneExpansion.SetActive (true);
 				foreach (GameObject torch in torches) {
 					torch.GetComponent<FlameAnimations> ().enabled = false;

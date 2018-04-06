@@ -7,6 +7,11 @@ public class MainMenu : MonoBehaviour {
 
 	public GameObject FadeOut;
 
+	void Start(){
+		Cursor.visible = true;
+		Cursor.lockState = CursorLockMode.None;
+	}
+
 	public void StartGame(){
 		StartCoroutine (FadeOutStart ());
 	}

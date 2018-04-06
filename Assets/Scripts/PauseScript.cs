@@ -22,7 +22,7 @@ public class PauseScript : MonoBehaviour
         {
             pauseMenu.SetActive(true);
             player.GetComponent<FirstPersonController>().enabled = false;
-			stateManager.paused = true;
+			stateManager.GamePaused = true;
 			SetCursorLockState (false);
             Time.timeScale = 0;
         }
@@ -31,7 +31,7 @@ public class PauseScript : MonoBehaviour
 			Time.timeScale = 1;
 			player.GetComponent<FirstPersonController>().enabled = true;
             pauseMenu.SetActive(false);
-			stateManager.paused = false;
+			stateManager.GamePaused = false;
 			SetCursorLockState (true);
         }
     }
@@ -50,24 +50,24 @@ public class PauseScript : MonoBehaviour
 		Time.timeScale = 1;
 		player.GetComponent<FirstPersonController>().enabled = true;
 		pauseMenu.SetActive(false);
-		stateManager.paused = false;
+		stateManager.GamePaused = false;
 		SetCursorLockState (true);
 	}
 
     public void Restart()
     {
         Time.timeScale = 1;
-		stateManager.paused = false;
-		CheckAttackZone.inAttackZone = false;
-		CheckAttackZone1.inAttackZone = false;
-		CheckSafetyZone1.inSafetyZone1 = false;
+		stateManager.GamePaused = false;
+		CheckSpiderZone1.InZone = false;
+		CheckSpiderZone2.InZone = false;
+		CheckZombieZone.SafelyInZone = false;
         SceneManager.LoadScene("Scene001");
     }
 
     public void ReturnToMainMenu()
     {
         Time.timeScale = 1;
-		stateManager.paused = false;
+		stateManager.GamePaused = false;
         SceneManager.LoadScene("MainMenu");
     }
 

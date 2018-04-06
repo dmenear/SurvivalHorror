@@ -4,25 +4,22 @@ using UnityEngine;
 
 public class Cheats : MonoBehaviour {
 
-	public GameObject[] monsters;
-	public GameObject flamethrower;
+	public GameObject[] Monsters;
+	public GameObject Flamethrower;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-
-	// Update is called once per frame
 	void Update () {
+		//Kill all monsters
 		if(Input.GetKeyDown(KeyCode.K)){
-			foreach(GameObject m in monsters){
+			foreach(GameObject m in Monsters){
 				Destroy (m);
 			}
 		}
-		if(Input.GetKeyDown(KeyCode.F) && !flamethrower.activeSelf){
-			flamethrower.SetActive (true);
-		} else if(Input.GetKeyDown(KeyCode.F) && flamethrower.activeSelf){
-			flamethrower.SetActive (false);
+
+		//Give or take flamethrower
+		if(Input.GetKeyDown(KeyCode.F) && !Flamethrower.activeSelf){
+			Flamethrower.SetActive (true);
+		} else if(Input.GetKeyDown(KeyCode.F) && Flamethrower.activeSelf){
+			Flamethrower.SetActive (false);
 		}
 	}
 }

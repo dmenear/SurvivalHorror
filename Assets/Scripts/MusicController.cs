@@ -5,7 +5,7 @@ using UnityEngine;
 public class MusicController : MonoBehaviour {
 
 	public AudioSource audio;
-	public AudioClip ambient, chase, spider;
+	public AudioClip ambient, chase, spider, maze;
 
 	// Use this for initialization
 	void Start () {
@@ -33,6 +33,12 @@ public class MusicController : MonoBehaviour {
 	public void changeToSpider(){
 		audio.Stop ();
 		audio.clip = spider;
+		audio.Play ();
+	}
+
+	public void changeToMaze(){
+		audio.Stop ();
+		audio.clip = maze;
 		audio.Play ();
 	}
 }
