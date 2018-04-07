@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Monster4Controller : MonoBehaviour {
 
-	public GameObject Door, SecondKey, Player, ThirdKey;
+	public GameObject Door, SecondKey, Player, ThirdKey, FallingBones, CorrectPillar;
 	public AudioClip shout;
 	public GameObject[] zombies;
-	bool activated, waiting, jumpingDown, finishJump, onFloor, finishShouting, secondKeyObtained, hitPillar;
+	bool activated, waiting, jumpingDown, finishJump, itemsDropped, onFloor, walkBackwards;
+	bool finishShouting, secondKeyObtained, hitPillar, pillarReactionStarted;
 	Vector3 direction;
 
 	// Use this for initialization
@@ -20,7 +21,9 @@ public class Monster4Controller : MonoBehaviour {
 		finishShouting = false;
 		secondKeyObtained = false;
 		hitPillar = false;
-		//ThirdKey.GetComponent<Rigidbody> ().isKinematic = false;
+		pillarReactionStarted = false;
+		walkBackwards = false;
+		itemsDropped = false;
 	}
 	
 	// Update is called once per frame
@@ -48,9 +51,15 @@ public class Monster4Controller : MonoBehaviour {
 			StartCoroutine (waitForNextShout ());
 			waiting = false;
 		}
-		if (onFloor) {
+		if (hitPillar && !pillarReactionStarted) {
+			pillarReactionStarted = true;
+			StartCoroutine (pillarSequence ());
+		} else if (onFloor) {
 			this.transform.rotation = Quaternion.Slerp (this.transform.rotation, Quaternion.LookRotation (direction), 0.02f);
 			this.transform.Translate (0, 0, 7.5f * Time.deltaTime);
+		} else if (walkBackwards) {
+			this.transform.rotation = Quaternion.Slerp (this.transform.rotation, Quaternion.LookRotation (direction), 0.02f);
+			this.transform.Translate (0, 0, -1.5f * Time.deltaTime);
 		}
 	}
 
@@ -108,8 +117,36 @@ public class Monster4Controller : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision other){
-		if(other.gameObject.layer = LayerMask.NameToLayer("CollisionPillars")){
-			
+		if(other.gameObject.layer == LayerMask.NameToLayer("CollisionPillars")){
+			hitPillar = true;
+			if (other.gameObject == CorrectPillar && !itemsDropped) {
+				dropItems ();
+			}
 		}
+	}
+
+	IEnumerator pillarSequence(){
+		GetComponent<Animator> ().SetBool ("isChasing", false);
+		GetComponent<Animator> ().SetBool ("hitPillar", true);
+		onFloor = false;
+		this.GetComponent<Rigidbody> ().velocity = Vector3.zero;
+		this.GetComponent<Rigidbody> ().angularVelocity = Vector3.zero;
+		yield return new WaitForSecondsRealtime (1.2f);
+		walkBackwards = true;
+		yield return new WaitForSecondsRealtime (1.5f);
+		walkBackwards = false;
+		GetComponent<Animator> ().SetBool ("isChasing", true);
+		GetComponent<Animator> ().SetBool ("hitPillar", false);
+		hitPillar = false;
+		pillarReactionStarted = false;
+		onFloor = true;
+	}
+
+	void dropItems(){
+		foreach (Transform bone in FallingBones.transform) {
+			bone.gameObject.GetComponent<Rigidbody> ().isKinematic = false;
+		}
+		ThirdKey.GetComponent<Rigidbody> ().isKinematic = false;
+		itemsDropped = true;
 	}
 }
