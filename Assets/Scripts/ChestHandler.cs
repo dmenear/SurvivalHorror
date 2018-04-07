@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ChestHandler : MonoBehaviour {
 
-	public GameObject Player, Chest, TextBox;
+	public GameObject Player, Chest, TextBox, keyInChest;
 	public AudioClip Creak, LockedSound;
 	public bool chestOpen, mouseOver, chestLocked, DisplayingText;
 	public float Distance;
@@ -24,6 +24,9 @@ public class ChestHandler : MonoBehaviour {
 					Chest.GetComponent<AudioSource> ().PlayOneShot (Creak, 0.7f);
 					Chest.GetComponent<Animator> ().SetBool ("isOpen", true);
 					chestOpen = true;
+					if (keyInChest != null && !keyInChest.activeSelf) {
+						keyInChest.SetActive (true);
+					}
 				} else {
 					if (!DisplayingText) {
 						Chest.GetComponent<AudioSource> ().PlayOneShot (LockedSound, 0.7f);

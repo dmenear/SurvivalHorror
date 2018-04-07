@@ -9,6 +9,7 @@ public class PickUpKey1 : MonoBehaviour {
 	public AudioClip pickup;
 	public AudioSource audio;
 	public float distance, angle;
+	public bool onFloor = false;
 	bool pickedUp = false;
 
 	// Update is called once per frame
@@ -16,7 +17,7 @@ public class PickUpKey1 : MonoBehaviour {
 		Vector3 direction = player.transform.position - this.transform.position;
 		angle = Vector3.Angle (direction, player.transform.forward);
 		distance = direction.magnitude;
-		if (angle >= 160 && distance <= 2 && !pickedUp) {
+		if (angle >= 160 && distance <= (onFloor ? 3 : 2) && !pickedUp) {
 			if(Input.GetButtonDown("Action")) {
 				audio.PlayOneShot (pickup, 0.7f);
 				displayMessage ();
@@ -29,7 +30,7 @@ public class PickUpKey1 : MonoBehaviour {
 	}
 
 	IEnumerator displayMessage(){
-		textBox.GetComponent<Text> ().text = "You found a key.";
+		textBox.GetComponent<Text> ().text = "You found a door key.";
 		yield return new WaitForSecondsRealtime (3.0f);
 		textBox.GetComponent<Text> ().text = "";
 		gameObject.SetActive (false);

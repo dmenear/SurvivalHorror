@@ -48,7 +48,7 @@ public class PickUpKey2 : MonoBehaviour {
 	}
 
 	IEnumerator displayMessage(){
-		textBox.GetComponent<Text> ().text = "You found 2 keys.";
+		textBox.GetComponent<Text> ().text = "You found 2 door keys.";
 		yield return new WaitForSecondsRealtime (3.0f);
 		textBox.GetComponent<Text> ().text = "";
 		gameObject.SetActive (false);
