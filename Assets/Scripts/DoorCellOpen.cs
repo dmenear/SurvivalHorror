@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class DoorCellOpen : MonoBehaviour {
 
 	public float Distance, Angle;
-	public GameObject Door, TextBox, Monster, Player;
+	public GameObject Door, TextBox, Player;
 
 	public AudioClip CreakSound, SlamSound, LockedSound, PrisonOpen, PrisonClose;
 	public bool DoorOpen = false, 
@@ -72,9 +72,8 @@ public class DoorCellOpen : MonoBehaviour {
 						}
 						StartCoroutine (SetStateChanging (0.5f, false));
 						if (Complete) {
-							StartCoroutine (killMonster ());
+							StartCoroutine (endMusic ());
 							GetComponent<DoorCellOpen> ().DoorLocked = true;
-
 						}
 					}
 				} else {
@@ -98,10 +97,9 @@ public class DoorCellOpen : MonoBehaviour {
 		}
 	}
 
-	IEnumerator killMonster(){
+	IEnumerator endMusic(){
 		yield return new WaitForSecondsRealtime (0.5f);
 		music.changeToAmbient ();
-		Destroy (Monster);
 	}
 
 	IEnumerator SetStateChanging(float changeTime, bool newState) {
@@ -126,7 +124,11 @@ public class DoorCellOpen : MonoBehaviour {
 
 	public void SlamDoorBehind(){
 		StartCoroutine (PlaySlamSound ());
-		Door.GetComponent<Animation> ().Play ("DoorSlamAnim");
+		if (openedOpposite) {
+			Door.GetComponent<Animation> ().Play ("DoorSlamOpposite");
+		} else {
+			Door.GetComponent<Animation> ().Play ("DoorSlamAnim");
+		}
 		StartCoroutine (SetStateChanging (0.5f, false));
 	}
 

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3310998}
   - component: {fileID: 2373386}
   - component: {fileID: 6456224}
+  - component: {fileID: 54819152870217242}
   m_Layer: 0
   m_Name: barrel.003 (4)
   m_TagString: Untagged
@@ -29,6 +30,7 @@ GameObject:
   - component: {fileID: 3304382}
   - component: {fileID: 2308938}
   - component: {fileID: 6471032}
+  - component: {fileID: 54574492469291082}
   m_Layer: 0
   m_Name: barrel.003 (2)
   m_TagString: Untagged
@@ -62,6 +64,7 @@ GameObject:
   - component: {fileID: 3321934}
   - component: {fileID: 2396412}
   - component: {fileID: 6477424}
+  - component: {fileID: 54089436012638402}
   m_Layer: 0
   m_Name: barrel.003 (3)
   m_TagString: Untagged
@@ -80,6 +83,7 @@ GameObject:
   - component: {fileID: 3392800}
   - component: {fileID: 2302062}
   - component: {fileID: 6403810}
+  - component: {fileID: 54722966087998870}
   m_Layer: 0
   m_Name: barrel.003 (5)
   m_TagString: Untagged
@@ -98,6 +102,7 @@ GameObject:
   - component: {fileID: 3366946}
   - component: {fileID: 2374192}
   - component: {fileID: 6494726}
+  - component: {fileID: 54461257413732954}
   m_Layer: 0
   m_Name: barrel.003
   m_TagString: Untagged
@@ -116,6 +121,7 @@ GameObject:
   - component: {fileID: 3369896}
   - component: {fileID: 2355730}
   - component: {fileID: 6416356}
+  - component: {fileID: 54659860204548494}
   m_Layer: 0
   m_Name: barrel.003 (1)
   m_TagString: Untagged
@@ -134,6 +140,7 @@ GameObject:
   - component: {fileID: 3372884}
   - component: {fileID: 2310994}
   - component: {fileID: 6456426}
+  - component: {fileID: 54150172638395632}
   m_Layer: 0
   m_Name: barrel.003 (6)
   m_TagString: Untagged
@@ -662,3 +669,108 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 141718}
   m_IsPrefabParent: 1
+--- !u!54 &54089436012638402
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163698}
+  serializedVersion: 2
+  m_Mass: 5
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54150172638395632
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 168136}
+  serializedVersion: 2
+  m_Mass: 5
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54461257413732954
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 167822}
+  serializedVersion: 2
+  m_Mass: 5
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54574492469291082
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 121582}
+  serializedVersion: 2
+  m_Mass: 5
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54659860204548494
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 167930}
+  serializedVersion: 2
+  m_Mass: 5
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54722966087998870
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 167790}
+  serializedVersion: 2
+  m_Mass: 5
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54819152870217242
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 103986}
+  serializedVersion: 2
+  m_Mass: 5
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

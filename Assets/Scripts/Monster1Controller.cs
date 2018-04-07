@@ -30,7 +30,7 @@ public class Monster1Controller : MonoBehaviour {
 		if (DoorTrigger.GetComponent<DoorCellOpen> ().StateChanging) {
 			state = "follow";
 		} else if(!DoorTrigger.GetComponent<DoorCellOpen>().DoorOpen && CheckZombieZone.SafelyInZone) {
-			DoorTrigger.GetComponent<DoorCellOpen> ().enabled = false;
+			DoorTrigger.GetComponent<DoorCellOpen> ().DoorLocked = true;
 			Music.changeToAmbient ();
 			gameObject.SetActive (false);
 		}
