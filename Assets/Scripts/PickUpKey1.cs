@@ -10,7 +10,7 @@ public class PickUpKey1 : MonoBehaviour {
 	public AudioSource audio;
 	public float distance, angle;
 	public bool onFloor = false;
-	bool pickedUp = false;
+	public bool pickedUp = false;
 
 	// Update is called once per frame
 	void Update () {

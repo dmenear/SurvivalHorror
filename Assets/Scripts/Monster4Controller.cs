@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Monster4Controller : MonoBehaviour {
 
-	public GameObject Door, SecondKey, Player;
+	public GameObject Door, SecondKey, Player, ThirdKey;
 	public AudioClip shout;
 	public GameObject[] zombies;
-	bool activated, waiting, jumpingDown, finishJump, onFloor, finishShouting;
+	bool activated, waiting, jumpingDown, finishJump, onFloor, finishShouting, secondKeyObtained, hitPillar;
 	Vector3 direction;
 
 	// Use this for initialization
@@ -18,15 +18,22 @@ public class Monster4Controller : MonoBehaviour {
 		finishJump = false;
 		onFloor = false;
 		finishShouting = false;
+		secondKeyObtained = false;
+		hitPillar = false;
+		//ThirdKey.GetComponent<Rigidbody> ().isKinematic = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		direction = Player.transform.position - this.transform.position;
 		direction.y = 0;
-		if (SecondKey.GetComponent<PickUpKey3> ().pickedUp) {
-			SecondKey.GetComponent<PickUpKey3> ().pickedUp = false;
-			StartCoroutine (waitBeforeJumping ());
+		if (SecondKey.activeSelf) {
+			if (!secondKeyObtained) {
+				if (SecondKey.GetComponent<PickUpKey1> ().pickedUp) {
+					secondKeyObtained = true;
+					StartCoroutine (waitBeforeJumping ());
+				}
+			}
 		}
 		if (WestChamberTrigger.isActivated && !activated) {
 			waiting = true;
@@ -98,5 +105,11 @@ public class Monster4Controller : MonoBehaviour {
 		GetComponent<Animator> ().SetBool ("isShouting", false);
 		onFloor = true;
 		StartCoroutine (takeABreak ());
+	}
+
+	void OnCollisionEnter(Collision other){
+		if(other.gameObject.layer = LayerMask.NameToLayer("CollisionPillars")){
+			
+		}
 	}
 }
