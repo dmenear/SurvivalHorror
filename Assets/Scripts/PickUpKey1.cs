@@ -17,7 +17,7 @@ public class PickUpKey1 : MonoBehaviour {
 		Vector3 direction = player.transform.position - this.transform.position;
 		angle = Vector3.Angle (direction, player.transform.forward);
 		distance = direction.magnitude;
-		if (angle >= 160 && distance <= (onFloor ? 3 : 2) && !pickedUp) {
+		if (angle >= 160 && distance <= (onFloor ? 2.3f : 2f) && !pickedUp) {
 			if(Input.GetButtonDown("Action")) {
 				audio.PlayOneShot (pickup, 0.7f);
 				displayMessage ();
