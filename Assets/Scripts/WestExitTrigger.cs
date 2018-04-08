@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WestExitTrigger : MonoBehaviour {
 
-	public GameObject Player, Door, DoorTrigger, MazeDoor;
+	public GameObject Player, Door, DoorTrigger, MazeDoor, SkeletonHolder;
 	public GameObject[] Monsters, TorchHolders;
 	
 	void OnTriggerEnter(Collider other){
@@ -22,6 +22,7 @@ public class WestExitTrigger : MonoBehaviour {
 						torch.Find ("TorchIllumination").gameObject.SetActive (false);
 					}
 				}
+				SkeletonHolder.SetActive (true);
 			}
 		}
 	}
