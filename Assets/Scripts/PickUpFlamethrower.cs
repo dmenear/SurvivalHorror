@@ -37,7 +37,7 @@ public class PickUpFlamethrower : MonoBehaviour
 
     IEnumerator displayMessage()
     {
-        textBox.GetComponent<Text>().text = "You found a flamethrower body.";
+        textBox.GetComponent<Text>().text = "Flamethrower body 1/1.";
         yield return new WaitForSecondsRealtime(3.0f);
         textBox.GetComponent<Text>().text = "";
         gameObject.SetActive(false);

@@ -33,7 +33,7 @@ public class PickUpFlamethrowerGas : MonoBehaviour
 
     IEnumerator displayMessage()
     {
-        textBox.GetComponent<Text>().text = "You found a flamethrower gas tank.";
+        textBox.GetComponent<Text>().text = "Flamethrower gas tank 1/1.";
         yield return new WaitForSecondsRealtime(3.0f);
         textBox.GetComponent<Text>().text = "";
         gameObject.SetActive(false);

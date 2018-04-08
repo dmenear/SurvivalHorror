@@ -11,7 +11,7 @@ public class PickupGasContainers : MonoBehaviour
     public float distance, angle;
     public bool onFloor = false;
     public bool pickedUp = false;
-
+    public static int containersPickedUp = 0;
     // Update is called once per frame
     void Update()
     {
@@ -23,17 +23,17 @@ public class PickupGasContainers : MonoBehaviour
             if (Input.GetButtonDown("Action"))
             {
                 audio.Play();
-                displayMessage();
                 containerMesh.GetComponent<MeshRenderer>().enabled = false;
-                StartCoroutine(displayMessage());
                 pickedUp = true;
+                containersPickedUp++;
+                StartCoroutine(displayMessage());
             }
         }
     }
 
     IEnumerator displayMessage()
     {
-        textBox.GetComponent<Text>().text = "You found a gas source.";
+        textBox.GetComponent<Text>().text = "Gas source " + containersPickedUp + "/5";
         yield return new WaitForSecondsRealtime(3.0f);
         textBox.GetComponent<Text>().text = "";
         gameObject.SetActive(false);
