@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class Monster4Controller : MonoBehaviour {
 
-	public GameObject Door, SecondKey, Player, ThirdKey, FallingBones, CorrectPillar;
-	public AudioClip shout;
+	public GameObject Door, SecondKey, Player, ThirdKey, FallingBones, CorrectPillar, JumpScare;
+	public AudioClip shout, PillarImpact, JumpScareAudio;
+	public MusicController Music;
+	public GameStateManager StateManager;
 	public GameObject[] zombies;
 	bool activated, waiting, jumpingDown, finishJump, itemsDropped, onFloor, walkBackwards;
-	bool finishShouting, secondKeyObtained, hitPillar, pillarReactionStarted;
+	bool finishShouting, secondKeyObtained, hitPillar, pillarReactionStarted, killed;
 	Vector3 direction;
+	AudioSource pillarSound, audioJumpScare;
 
 	// Use this for initialization
 	void Start () {
@@ -24,6 +27,8 @@ public class Monster4Controller : MonoBehaviour {
 		pillarReactionStarted = false;
 		walkBackwards = false;
 		itemsDropped = false;
+		killed = false;
+		audioJumpScare = StateManager.GetComponent<AudioSource> ();
 	}
 	
 	// Update is called once per frame
@@ -119,9 +124,16 @@ public class Monster4Controller : MonoBehaviour {
 	void OnCollisionEnter(Collision other){
 		if(other.gameObject.layer == LayerMask.NameToLayer("CollisionPillars")){
 			hitPillar = true;
+			pillarSound = other.gameObject.GetComponent<AudioSource> ();
 			if (other.gameObject == CorrectPillar && !itemsDropped) {
 				dropItems ();
 			}
+		} else if(other.gameObject == Player.gameObject && !killed){
+			killed = true;
+			JumpScare.SetActive (true);
+			Music.audio.Stop ();
+			audioJumpScare.PlayOneShot (JumpScareAudio, 1.5f);
+			StateManager.EndGame ();
 		}
 	}
 
@@ -131,6 +143,7 @@ public class Monster4Controller : MonoBehaviour {
 		onFloor = false;
 		this.GetComponent<Rigidbody> ().velocity = Vector3.zero;
 		this.GetComponent<Rigidbody> ().angularVelocity = Vector3.zero;
+		pillarSound.PlayOneShot (PillarImpact, 0.7f);
 		yield return new WaitForSecondsRealtime (1.2f);
 		walkBackwards = true;
 		yield return new WaitForSecondsRealtime (1.5f);

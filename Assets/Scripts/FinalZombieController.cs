@@ -37,7 +37,9 @@ public class FinalZombieController : MonoBehaviour {
 		this.transform.rotation = Quaternion.Slerp (this.transform.rotation, Quaternion.LookRotation (direction), 0.1f);
 		if (Activated) {
 			if (!roared) {
-				Music.changeToChase ();
+				if (FastZombie) {
+					Music.changeToFinalBoss ();
+				}
 				roared = true;
 				StartCoroutine (periodicSound());
 			}
@@ -62,7 +64,7 @@ public class FinalZombieController : MonoBehaviour {
 	}
 
 	IEnumerator periodicSound(){
-		yield return new WaitForSecondsRealtime (Random.Range(3.0f, 6.0f));
+		yield return new WaitForSecondsRealtime (Random.Range(4.0f, 8.0f));
 		int sound = Random.Range (0, 3);
 		switch (sound) {
 		case 0:

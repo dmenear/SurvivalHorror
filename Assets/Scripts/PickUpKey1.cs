@@ -5,12 +5,13 @@ using UnityEngine.UI;
 
 public class PickUpKey1 : MonoBehaviour {
 
-	public GameObject player, door, keyMesh, textBox;
+	public GameObject player, door, keyMesh, textBox, westExitTrigger, westEnterTrigger, monsterBlocker;
 	public AudioClip pickup;
 	public AudioSource audio;
 	public float distance, angle;
 	public bool onFloor = false;
 	public bool pickedUp = false;
+	public bool finalWestKey = false;
 
 	// Update is called once per frame
 	void Update () {
@@ -25,6 +26,12 @@ public class PickUpKey1 : MonoBehaviour {
 				keyMesh.GetComponent<MeshRenderer> ().enabled = false;
 				StartCoroutine (displayMessage());
 				pickedUp = true;
+				if (finalWestKey) {
+					door.GetComponent<DoorCellOpen> ().SlamBehind = true;
+					westExitTrigger.SetActive(true);
+					monsterBlocker.SetActive (true);
+					westEnterTrigger.SetActive (false);
+				}
 			}
 		}
 	}
