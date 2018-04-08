@@ -6,9 +6,14 @@ using UnityEngine.UI;
 public class readflamethrowerscroll : MonoBehaviour {
 
 	public GameObject player, flameThrowerScroll, textBox;
+    public AudioClip pickupAudio;
 	public float distance, angle;
-    public AudioSource efxSource;
+    AudioSource efxSource;
 
+    private void Start()
+    {
+       efxSource = GetComponent<AudioSource>();
+    }
     // Update is called once per frame
     void Update () {
 		Vector3 direction = player.transform.position - this.transform.position;
@@ -17,21 +22,15 @@ public class readflamethrowerscroll : MonoBehaviour {
 		if (angle >= 160 && distance <= 2 && !flameThrowerScroll.activeSelf) {
 			if(Input.GetButtonDown("Action")) {
 				flameThrowerScroll.SetActive (true);
-                efxSource.Play();
-              // StartCoroutine(displayMessage());
+                efxSource.PlayOneShot(pickupAudio, .7f);
             }
 		}
 		else if (flameThrowerScroll.activeSelf && (Input.GetButtonDown("Action") || Input.anyKeyDown)) {
 			flameThrowerScroll.SetActive (false);
-       
-		}
+            textBox.SetActive(true);
+        }
 	}
 
-    //IEnumerator displayMessage()
-   // {
-       // textBox.GetComponent<Text>().text = "Gas source /5";
-      //  yield return new WaitForSecondsRealtime(3.0f);
-      //  textBox.GetComponent<Text>().text = "";
-    //}
+   
 
 }

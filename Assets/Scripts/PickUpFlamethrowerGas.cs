@@ -7,6 +7,7 @@ public class PickUpFlamethrowerGas : MonoBehaviour
 {
 
     public GameObject player, textBox;
+    public flamethrowerpartcounter ftpc;
     public AudioClip pickupSound;
     public float distance, angle;
     public bool onShelf = false;
@@ -31,13 +32,15 @@ public class PickUpFlamethrowerGas : MonoBehaviour
                 GetComponent<MeshRenderer>().enabled = false;
                 StartCoroutine(displayMessage());
                 pickedUp = true;
+                ftpc.tank += 1;
+                ftpc.UpdateOverlay();
             }
         }
     }
 
     IEnumerator displayMessage()
     {
-        textBox.GetComponent<Text>().text = "Flamethrower gas tank 1/1.";
+        textBox.GetComponent<Text>().text = "Picked up Flamethrower Tank";
         yield return new WaitForSecondsRealtime(3.0f);
         textBox.GetComponent<Text>().text = "";
         gameObject.SetActive(false);
