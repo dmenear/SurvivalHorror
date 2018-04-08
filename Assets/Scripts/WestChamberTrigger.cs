@@ -6,6 +6,7 @@ public class WestChamberTrigger : MonoBehaviour {
 
 	public static bool isActivated;
 	public GameObject Player, Door, DoorTrigger;
+	public MusicController music;
 
 	// Use this for initialization
 	void Start () {
@@ -19,7 +20,13 @@ public class WestChamberTrigger : MonoBehaviour {
 				DoorTrigger.GetComponent<DoorCellOpen> ().SlamBehind = false;
 				DoorTrigger.GetComponent<DoorCellOpen> ().SlamDoorBehind ();
 				DoorTrigger.GetComponent<DoorCellOpen> ().DoorLocked = true;
+				StartCoroutine (stopMusic ());
 			}
 		}
+	}
+
+	IEnumerator stopMusic(){
+		yield return new WaitForSeconds (0.5f);
+		music.turnOffMusic ();
 	}
 }

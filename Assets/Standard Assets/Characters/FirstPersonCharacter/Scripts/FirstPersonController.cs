@@ -14,6 +14,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
     {
 		public GameObject flashlight;
 		public AudioClip flashlight_on, flashlight_off, flicker;
+		public bool flashlightEnabled;
 
         [SerializeField] private bool m_IsWalking;
         [SerializeField] private float m_WalkSpeed;
@@ -60,20 +61,27 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_Jumping = false;
             m_AudioSource = GetComponent<AudioSource>();
 			m_MouseLook.Init(transform , m_Camera.transform);
+			flashlightEnabled = true;
         }
 
 
         // Update is called once per frame
         private void Update()
         {
-			if (Input.GetKeyDown (KeyCode.Q)) {
+			if (flashlightEnabled) {
+				if (Input.GetKeyDown (KeyCode.Q)) {
+					if (flashlight.activeSelf) {
+						flashlight.SetActive (false);
+						GetComponents<AudioSource> () [1].PlayOneShot (flashlight_off, 0.7f);
+					} else {
+						flashlight.SetActive (true);
+						flashlight.GetComponent<Light> ().intensity = 1.5f;
+						GetComponents<AudioSource> () [1].PlayOneShot (flashlight_on, 0.7f);
+					}
+				}
+			} else {
 				if (flashlight.activeSelf) {
 					flashlight.SetActive (false);
-					GetComponents<AudioSource>()[1].PlayOneShot (flashlight_off, 0.7f);
-				} else {
-					flashlight.SetActive (true);
-					flashlight.GetComponent<Light> ().intensity = 1.5f;
-					GetComponents<AudioSource>()[1].PlayOneShot (flashlight_on, 0.7f);
 				}
 			}
 			if (flashlight.activeSelf) {
