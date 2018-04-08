@@ -39,7 +39,6 @@ public class EndSkeletonController : MonoBehaviour {
 		if (snap) {
 			snapHead ();
 		}
-		Debug.Log (angle);
 	}
 
 	void changeRotation(GameObject bodyPart, float angle, float modifier){
