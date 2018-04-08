@@ -16,15 +16,15 @@ public class DoorCellOpen : MonoBehaviour {
 				DisplayingText = false,
 				SlamBehind = false,
 				IsPrison = false,
-				Complete = false;
+				Complete = false,
+				SkeletonDoor = false,
+				openedOpposite = false;
 	public MusicController music;
 
 	AudioSource audio;
-	bool openedOpposite;
 
 	void Start(){
 		audio = Door.GetComponent<AudioSource> ();
-		openedOpposite = false;
 	}
 
 	void Update () {
@@ -42,6 +42,9 @@ public class DoorCellOpen : MonoBehaviour {
 						audio.PlayOneShot (PrisonOpen, 0.7f);
 						StartCoroutine (SetStateChanging (1.5f, true));
 					} else {
+						if (SkeletonDoor) {
+							music.turnOffMusic ();
+						}
 						if (Angle < 0) {
 							Door.GetComponent<Animation> ().Play ("FirstDoorOpenAnim");
 							openedOpposite = false;
@@ -137,5 +140,14 @@ public class DoorCellOpen : MonoBehaviour {
 		foreach(Transform child in obj.transform){
 			SetLayerRecursively (child.gameObject, layer);
 		}
+	}
+
+	public void CloseDoor(){
+		if (openedOpposite) {
+			Door.GetComponent<Animation> ().Play ("DoorCloseOpposite");
+		} else {
+			Door.GetComponent<Animation> ().Play ("FirstDoorCloseAnim");
+		}
+		StartCoroutine (SetStateChanging (1.0f, false));
 	}
 }

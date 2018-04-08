@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MusicController : MonoBehaviour {
 
+	public GameObject torch;
 	public AudioSource audio;
 	public AudioClip ambient, chase, spider, maze, finalBoss;
 
@@ -11,11 +12,6 @@ public class MusicController : MonoBehaviour {
 	void Start () {
 		audio = GetComponent<AudioSource> ();
 		audio.Play ();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 
 	public void changeToChase(){
@@ -51,5 +47,9 @@ public class MusicController : MonoBehaviour {
 		audio.clip = finalBoss;
 		audio.volume = 0.6f;
 		audio.Play ();
+	}
+
+	public void turnOffMusic(){
+		audio.Stop ();
 	}
 }
