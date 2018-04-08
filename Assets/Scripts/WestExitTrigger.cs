@@ -16,10 +16,11 @@ public class WestExitTrigger : MonoBehaviour {
 				StartCoroutine (killMonsters ());
 				MazeDoor.GetComponent<DoorCellOpen> ().SkeletonDoor = true;
 				MazeDoor.GetComponent<DoorCellOpen> ().CloseDoor ();
-				foreach(GameObject torch in TorchHolders){
-					torch.SetActive (false);
-					//torch.transform.Find ("TorchFlame").gameObject.SetActive(false);
-					//torch.transform.Find ("TorchIllumination").gameObject.SetActive(false);
+				foreach(GameObject torchHolder in TorchHolders){
+					foreach (Transform torch in torchHolder.transform) {
+						torch.Find ("TorchFlame").gameObject.SetActive (false);
+						torch.Find ("TorchIllumination").gameObject.SetActive (false);
+					}
 				}
 			}
 		}
