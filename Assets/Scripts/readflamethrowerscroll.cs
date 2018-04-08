@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class readflamethrowerscroll : MonoBehaviour {
 
-	public GameObject player, flameThrowerScroll;
+	public GameObject player, flameThrowerScroll, textBox;
 	public float distance, angle;
     public AudioSource efxSource;
 
@@ -17,12 +18,20 @@ public class readflamethrowerscroll : MonoBehaviour {
 			if(Input.GetButtonDown("Action")) {
 				flameThrowerScroll.SetActive (true);
                 efxSource.Play();
-			}
+              // StartCoroutine(displayMessage());
+            }
 		}
 		else if (flameThrowerScroll.activeSelf && (Input.GetButtonDown("Action") || Input.anyKeyDown)) {
 			flameThrowerScroll.SetActive (false);
        
 		}
 	}
- 
+
+    //IEnumerator displayMessage()
+   // {
+       // textBox.GetComponent<Text>().text = "Gas source /5";
+      //  yield return new WaitForSecondsRealtime(3.0f);
+      //  textBox.GetComponent<Text>().text = "";
+    //}
+
 }
