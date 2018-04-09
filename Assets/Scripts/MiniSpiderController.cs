@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class MiniSpiderController : MonoBehaviour {
 
 
-	public GameObject Player, WPAttack, WPReturn, FlamethrowerFlame, SpiderMesh, JumpScare;
+	public GameObject Player, WPAttack, WPReturn, FlamethrowerFlame, SpiderMesh, JumpScare, TextBox, Flamethrower;
 	public GameObject[] PanicWaypoints;
 	public ParticleSystem Flame, Smoke;
 	public Material burnedMat;
@@ -242,5 +244,10 @@ public class MiniSpiderController : MonoBehaviour {
 		yield return new WaitForSeconds (12.0f);
 		Smoke.Stop ();
 		killFire = false;
+		Flamethrower.SetActive (false);
+		Player.GetComponent<FirstPersonController> ().flashlightEnabled = true;
+		TextBox.GetComponent<Text>().text = "Your flamethrower fell apart.";
+		yield return new WaitForSeconds (4.0f);
+		TextBox.GetComponent<Text>().text = "";
 	}
 }

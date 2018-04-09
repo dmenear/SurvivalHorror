@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class flamethrowerpartcounter : MonoBehaviour {
 
@@ -54,6 +55,7 @@ public class flamethrowerpartcounter : MonoBehaviour {
         textBox.GetComponent<Text>().text = "";
         flamethrower.SetActive(true);
         overlay.SetActive(false);
+		player.GetComponent<FirstPersonController> ().flashlightEnabled = false;
     }
 
 
