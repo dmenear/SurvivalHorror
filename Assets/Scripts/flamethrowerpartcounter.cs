@@ -6,7 +6,7 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class flamethrowerpartcounter : MonoBehaviour {
 
-    public GameObject player, overlay, flamethrower, textBox;
+    public GameObject player, fpsController, overlay, flamethrower, textBox;
     public AudioClip crafting, gas, drawFlamethrower;
     AudioSource audio;
     public int body, tank, cans;
@@ -55,7 +55,7 @@ public class flamethrowerpartcounter : MonoBehaviour {
         textBox.GetComponent<Text>().text = "";
         flamethrower.SetActive(true);
         overlay.SetActive(false);
-		player.GetComponent<FirstPersonController> ().flashlightEnabled = false;
+		fpsController.GetComponent<FirstPersonController> ().flashlightEnabled = false;
     }
 
 
