@@ -8,6 +8,7 @@ public class PickUpFlamethrower : MonoBehaviour
 
     public GameObject player, textBox;
     public AudioClip pickupAudio;
+    public flamethrowerpartcounter ftpc;
     public float distance, angle;
     public bool onFloor = false;
     public bool pickedUp = false;
@@ -36,13 +37,15 @@ public class PickUpFlamethrower : MonoBehaviour
                 }
                 StartCoroutine(displayMessage());
                 pickedUp = true;
+                ftpc.body += 1;
+                ftpc.UpdateOverlay();
             }
         }
     }
 
     IEnumerator displayMessage()
     {
-        textBox.GetComponent<Text>().text = "Flamethrower body 1/1.";
+        textBox.GetComponent<Text>().text = "Picked up Flamethrower Body";
         yield return new WaitForSecondsRealtime(3.0f);
         textBox.GetComponent<Text>().text = "";
         gameObject.SetActive(false);
