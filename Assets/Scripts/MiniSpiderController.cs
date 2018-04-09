@@ -65,6 +65,7 @@ public class MiniSpiderController : MonoBehaviour {
 					this.transform.Translate (0, 0, panicSpeed * Time.deltaTime);
 					if (direction.magnitude < 0.7f) {
 						panicWP1Reached = true;
+						Flamethrower.GetComponent<FlamethrowerControls> ().breakOnNextFire = true;
 					}
 				} else {
 					if (panicID < PanicWaypoints.Length) {
@@ -244,10 +245,5 @@ public class MiniSpiderController : MonoBehaviour {
 		yield return new WaitForSeconds (12.0f);
 		Smoke.Stop ();
 		killFire = false;
-		Flamethrower.SetActive (false);
-		Player.GetComponent<FirstPersonController> ().flashlightEnabled = true;
-		TextBox.GetComponent<Text>().text = "Your flamethrower fell apart.";
-		yield return new WaitForSeconds (4.0f);
-		TextBox.GetComponent<Text>().text = "";
 	}
 }

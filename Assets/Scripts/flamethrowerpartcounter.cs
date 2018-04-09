@@ -42,7 +42,7 @@ public class flamethrowerpartcounter : MonoBehaviour {
 
     IEnumerator displayMessage()
     {
-        yield return new WaitForSecondsRealtime(5.0f);
+        yield return new WaitForSecondsRealtime(2.0f);
         textBox.GetComponent<Text>().text = "Constructing Flamethrower...";
         audio.PlayOneShot(crafting, 0.7f);
         yield return new WaitForSecondsRealtime(6.0f);
