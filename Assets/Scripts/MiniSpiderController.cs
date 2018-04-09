@@ -5,19 +5,22 @@ using UnityEngine;
 public class MiniSpiderController : MonoBehaviour {
 
 
-	public GameObject Player, WPAttack, WPReturn, FlamethrowerFlame, SpiderMesh;
+	public GameObject Player, WPAttack, WPReturn, FlamethrowerFlame, SpiderMesh, JumpScare;
 	public GameObject[] PanicWaypoints;
 	public ParticleSystem Flame, Smoke;
 	public Material burnedMat;
 	public float posAccuracy = 0.5f, rotSpeed = 4.0f, rotAccuracy = 6.0f;
 	public float walkSpeed = 3.0f, chaseSpeed = 7.5f, panicSpeed = 8.5f, diff;
-	public AudioClip snarl;
+	public AudioClip snarl, roar, pain1, pain2, death, JumpScareAudio;
+	public GameStateManager StateManager;
+	public MusicController Music;
 	AudioSource audio;
 	Animator anim;
 	public int panicID;
 	public bool idle, onFire, panicStarted, dead, fireDieStarted, smokeDieStarted;
-	bool panicWP0Reached, panicWP1Reached, killFire;
+	bool panicWP0Reached, panicWP1Reached, killFire, killed;
 	Vector3 direction;
+	int soundNum;
 
 	void Start () {
 		idle = true;
@@ -28,7 +31,9 @@ public class MiniSpiderController : MonoBehaviour {
 		killFire = false;
 		fireDieStarted = false;
 		smokeDieStarted = false;
+		killed = false;
 		dead = false;
+		soundNum = 0;
 		anim = GetComponent<Animator> ();
 		audio = GetComponent<AudioSource> ();
 		panicID = 2;
@@ -77,6 +82,7 @@ public class MiniSpiderController : MonoBehaviour {
 						anim.SetBool ("isDying", true);
 						dead = true;
 						if (!fireDieStarted) {
+							audio.PlayOneShot (death, 0.7f);
 							StartCoroutine (fireDie ());
 							fireDieStarted = true;
 						}
@@ -184,8 +190,46 @@ public class MiniSpiderController : MonoBehaviour {
 		}
 	}
 
+	void OnCollisionEnter(Collision other){
+		if (!onFire && !dead) {
+			if (other.gameObject == Player.gameObject && !killed) {
+				killed = true;
+				JumpScare.SetActive (true);
+				Music.audio.Stop ();
+				StateManager.GetComponent<AudioSource>().PlayOneShot (JumpScareAudio, 1.5f);
+				StateManager.EndGame ();
+			}
+		}
+	}
+
+	IEnumerator dyingSounds(){
+		if (!dead) {
+			yield return new WaitForSeconds (3.0f);
+			switch (soundNum) {
+			case 0:
+				audio.PlayOneShot (pain1, 0.8f);
+				break;
+			case 1:
+				audio.PlayOneShot (pain2, 0.8f);
+				break;
+			case 2:
+				audio.PlayOneShot (roar, 0.8f);
+				break;
+			}
+			if (soundNum <= 2) {
+				soundNum++;
+			} else {
+				soundNum = 0;
+			}
+			StartCoroutine (dyingSounds ());
+		}
+	}
+
 	IEnumerator fireWait(){
 		yield return new WaitForSeconds (0.25f);
+		audio.PlayOneShot (roar, 0.8f);
+		GetComponents<AudioSource> () [1].Stop ();
+		StartCoroutine (dyingSounds ());
 		onFire = true;
 	}
 
