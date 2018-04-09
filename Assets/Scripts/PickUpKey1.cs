@@ -22,7 +22,11 @@ public class PickUpKey1 : MonoBehaviour {
 			if(Input.GetButtonDown("Action")) {
 				audio.PlayOneShot (pickup, 0.7f);
 				displayMessage ();
-				door.GetComponent<DoorCellOpen> ().DoorLocked = false;
+				if (door.GetComponent<DoorCellOpen> () == null) {
+					door.GetComponent<VictoryDoor> ().DoorLocked = false;
+				} else {
+					door.GetComponent<DoorCellOpen> ().DoorLocked = false;
+				}
 				keyMesh.GetComponent<MeshRenderer> ().enabled = false;
 				StartCoroutine (displayMessage());
 				pickedUp = true;

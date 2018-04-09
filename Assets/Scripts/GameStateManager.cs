@@ -9,6 +9,7 @@ public class GameStateManager : MonoBehaviour {
 	public GameObject Player, FadeOut, VictoryText;
 	public GameObject[] Monsters;
 	public bool GamePaused;
+	public MusicController Music;
 
 	void Start(){
 		GamePaused = false;
@@ -39,12 +40,13 @@ public class GameStateManager : MonoBehaviour {
 	}
 
 	IEnumerator backToMenu(){
-		yield return new WaitForSecondsRealtime (15.0f);
+		yield return new WaitForSecondsRealtime (30.0f);
 		SceneManager.LoadScene ("MainMenu");
 	}
 
 	IEnumerator showVictoryText(){
 		yield return new WaitForSecondsRealtime (2.5f);
 		VictoryText.SetActive (true);
+		Music.changeToFinalBoss ();
 	}
 }
