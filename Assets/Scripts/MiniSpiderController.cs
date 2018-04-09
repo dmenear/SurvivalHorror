@@ -5,17 +5,18 @@ using UnityEngine;
 public class MiniSpiderController : MonoBehaviour {
 
 
-	public GameObject Player, WPAttack, WPReturn, FlamethrowerFlame;
+	public GameObject Player, WPAttack, WPReturn, FlamethrowerFlame, SpiderMesh;
 	public GameObject[] PanicWaypoints;
-	public ParticleSystem Flame;
+	public ParticleSystem Flame, Smoke;
+	public Material burnedMat;
 	public float posAccuracy = 0.5f, rotSpeed = 4.0f, rotAccuracy = 6.0f;
 	public float walkSpeed = 3.0f, chaseSpeed = 7.5f, panicSpeed = 8.5f, diff;
 	public AudioClip snarl;
 	AudioSource audio;
 	Animator anim;
 	public int panicID;
-	public bool idle, onFire, panicStarted, dead;
-	bool panicWP0Reached, panicWP1Reached;
+	public bool idle, onFire, panicStarted, dead, fireDieStarted, smokeDieStarted;
+	bool panicWP0Reached, panicWP1Reached, killFire;
 	Vector3 direction;
 
 	void Start () {
@@ -24,6 +25,10 @@ public class MiniSpiderController : MonoBehaviour {
 		panicStarted = false;
 		panicWP0Reached = false;
 		panicWP1Reached = false;
+		killFire = false;
+		fireDieStarted = false;
+		smokeDieStarted = false;
+		dead = false;
 		anim = GetComponent<Animator> ();
 		audio = GetComponent<AudioSource> ();
 		panicID = 2;
@@ -32,6 +37,7 @@ public class MiniSpiderController : MonoBehaviour {
 	void Update () {
 		if (!dead) {
 			if (onFire) {
+				SpiderMesh.GetComponent<SkinnedMeshRenderer>().material.Lerp (SpiderMesh.GetComponent<SkinnedMeshRenderer>().material, burnedMat, 0.1f * Time.deltaTime);
 				setChasing ();
 				if (!panicWP0Reached) {
 					direction = PanicWaypoints [0].transform.position - this.transform.position;
@@ -69,8 +75,11 @@ public class MiniSpiderController : MonoBehaviour {
 						anim.speed = 1.0f;
 						anim.SetBool ("isChasing", false);
 						anim.SetBool ("isDying", true);
-						Flame.Stop ();
 						dead = true;
+						if (!fireDieStarted) {
+							StartCoroutine (fireDie ());
+							fireDieStarted = true;
+						}
 					}
 				}
 
@@ -111,6 +120,30 @@ public class MiniSpiderController : MonoBehaviour {
 					}
 				}
 			}
+		} else {
+			if (killFire) {
+				ParticleSystem.MainModule flameMain = Flame.main;
+				if (flameMain.startLifetime.constant > 0.33f) {
+					flameMain.startLifetime = Mathf.Lerp (flameMain.startLifetime.constant, 0f, 0.5f * Time.deltaTime);
+					flameMain.startSpeed = Mathf.Lerp (flameMain.startSpeed.constant, 0f, 2.5f * Time.deltaTime);
+				} else {
+					Flame.Stop ();
+				}
+				ParticleSystem.MainModule smokeMain = Smoke.main;
+				if (smokeMain.startLifetime.constant > 2f && smokeMain.startSpeed.constant > 0.01f) {
+					smokeMain.startLifetime = Mathf.Lerp (smokeMain.startLifetime.constant, 1.4f, 0.5f * Time.deltaTime);
+					smokeMain.startSpeed = Mathf.Lerp (smokeMain.startSpeed.constant, 0f, 0.5f * Time.deltaTime);
+				} else {
+					smokeMain.startLifetime = 2.3f;
+					smokeMain.startSpeed = 0.4f;
+					SpiderMesh.GetComponent<MeshCollider> ().enabled = true;
+					GetComponent<BoxCollider> ().enabled = false;
+					if (!smokeDieStarted) {
+						smokeDieStarted = true;
+						StartCoroutine (smokeDie ());
+					}
+				}
+			}
 		}
 	}
 
@@ -144,6 +177,7 @@ public class MiniSpiderController : MonoBehaviour {
 			if (other.gameObject == FlamethrowerFlame.gameObject) {
 				if (!Flame.isPlaying) {
 					Flame.Play ();
+					Smoke.Play ();
 					StartCoroutine (fireWait ());
 				}
 			}
@@ -153,5 +187,16 @@ public class MiniSpiderController : MonoBehaviour {
 	IEnumerator fireWait(){
 		yield return new WaitForSeconds (0.25f);
 		onFire = true;
+	}
+
+	IEnumerator fireDie(){
+		yield return new WaitForSeconds (1.0f);
+		killFire = true;
+	}
+
+	IEnumerator smokeDie(){
+		yield return new WaitForSeconds (12.0f);
+		Smoke.Stop ();
+		killFire = false;
 	}
 }
