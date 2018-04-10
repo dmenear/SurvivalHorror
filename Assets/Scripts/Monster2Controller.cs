@@ -59,7 +59,7 @@ public class Monster2Controller : MonoBehaviour {
 			killed = true;
 			JumpScare.SetActive (true);
 			Music.audio.Stop ();
-			audioJumpScare.PlayOneShot (JumpScareAudio, 1.5f);
+			audioJumpScare.PlayOneShot (JumpScareAudio, 1.3f);
 			StateManager.EndGame ();
 		}
 	}
@@ -69,7 +69,7 @@ public class Monster2Controller : MonoBehaviour {
 	}
 
 	IEnumerator upCloseSound(){
-		audio.PlayOneShot (SpiderUpClose, 0.8f);
+		audio.PlayOneShot (SpiderUpClose, 0.5f);
 		yield return new WaitForSecondsRealtime (10.0f);
 	}
 }

@@ -85,7 +85,7 @@ public class MiniSpiderController : MonoBehaviour {
 						anim.SetBool ("isDying", true);
 						dead = true;
 						if (!fireDieStarted) {
-							audio.PlayOneShot (death, 0.7f);
+							audio.PlayOneShot (death, 0.4f);
 							StartCoroutine (fireDie ());
 							fireDieStarted = true;
 						}
@@ -161,7 +161,7 @@ public class MiniSpiderController : MonoBehaviour {
 		anim.SetBool ("isWalking", false);
 		if(!anim.GetBool("isChasing")){
 			anim.SetBool ("isChasing", true);
-			audio.PlayOneShot (snarl, 0.7f);
+			audio.PlayOneShot (snarl, 0.4f);
 		}
 	}
 
@@ -199,7 +199,7 @@ public class MiniSpiderController : MonoBehaviour {
 				killed = true;
 				JumpScare.SetActive (true);
 				Music.audio.Stop ();
-				StateManager.GetComponent<AudioSource>().PlayOneShot (JumpScareAudio, 1.5f);
+				StateManager.GetComponent<AudioSource>().PlayOneShot (JumpScareAudio, 1.3f);
 				StateManager.EndGame ();
 			}
 		}
@@ -210,13 +210,13 @@ public class MiniSpiderController : MonoBehaviour {
 			yield return new WaitForSeconds (3.0f);
 			switch (soundNum) {
 			case 0:
-				audio.PlayOneShot (pain1, 0.8f);
+				audio.PlayOneShot (pain1, 0.4f);
 				break;
 			case 1:
-				audio.PlayOneShot (pain2, 0.8f);
+				audio.PlayOneShot (pain2, 0.4f);
 				break;
 			case 2:
-				audio.PlayOneShot (roar, 0.8f);
+				audio.PlayOneShot (roar, 0.4f);
 				break;
 			}
 			if (soundNum <= 2) {
@@ -230,7 +230,7 @@ public class MiniSpiderController : MonoBehaviour {
 
 	IEnumerator fireWait(){
 		yield return new WaitForSeconds (0.25f);
-		audio.PlayOneShot (roar, 0.8f);
+		audio.PlayOneShot (roar, 0.4f);
 		GetComponents<AudioSource> () [1].Stop ();
 		StartCoroutine (dyingSounds ());
 		onFire = true;

@@ -226,7 +226,7 @@ public class Monster3Controller : MonoBehaviour {
 			killed = true;
 			jumpScare.SetActive (true);
 			GetComponent<AudioSource> ().enabled = false;
-			audio.PlayOneShot (jumpScareSound, 1.5f);
+			audio.PlayOneShot (jumpScareSound, 1.3f);
 			stateManager.EndGame ();
 		}
 	}

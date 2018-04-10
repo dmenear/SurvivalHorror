@@ -36,7 +36,7 @@ public class Monster1Controller : MonoBehaviour {
 		}
 		if (state == "follow") {
 			if (!roared) {
-				audio.PlayOneShot (Roar1, 0.6f);
+				audio.PlayOneShot (Roar1, 0.4f);
 				Music.changeToChase ();
 				roared = true;
 				StartCoroutine (periodicSound());
@@ -58,7 +58,7 @@ public class Monster1Controller : MonoBehaviour {
 			killed = true;
 			JumpScare.SetActive (true);
 			Music.audio.Stop ();
-			audioJumpScare.PlayOneShot (JumpScareAudio, 1.5f);
+			audioJumpScare.PlayOneShot (JumpScareAudio, 1.3f);
 			StateManager.EndGame ();
 		}
 	}
@@ -68,13 +68,13 @@ public class Monster1Controller : MonoBehaviour {
 		int sound = Random.Range (0, 3);
 		switch (sound) {
 		case 0:
-			audio.PlayOneShot (Roar2, 0.6f);
+			audio.PlayOneShot (Roar2, 0.4f);
 			break;
 		case 1:
-			audio.PlayOneShot (Roar3, 0.6f);
+			audio.PlayOneShot (Roar3, 0.4f);
 			break;
 		case 2:
-			audio.PlayOneShot (Roar4, 0.6f);
+			audio.PlayOneShot (Roar4, 0.4f);
 			break;
 		}
 	}

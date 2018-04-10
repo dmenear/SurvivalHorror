@@ -71,7 +71,7 @@ public class Monster4Controller : MonoBehaviour {
 	IEnumerator shoutSound(){
 		yield return new WaitForSecondsRealtime (0.7f);
 		GetComponent<Animator> ().SetBool ("isShouting", false);
-		GetComponent<AudioSource> ().PlayOneShot (shout, 1.3f);
+		GetComponent<AudioSource> ().PlayOneShot (shout, 1.0f);
 		foreach (GameObject z in zombies) {
 			z.GetComponent<FinalZombieController>().Boost ();
 		}
@@ -132,7 +132,7 @@ public class Monster4Controller : MonoBehaviour {
 			killed = true;
 			JumpScare.SetActive (true);
 			Music.audio.Stop ();
-			audioJumpScare.PlayOneShot (JumpScareAudio, 1.5f);
+			audioJumpScare.PlayOneShot (JumpScareAudio, 1.3f);
 			StateManager.EndGame ();
 		}
 	}
