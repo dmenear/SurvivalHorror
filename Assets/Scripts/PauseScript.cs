@@ -10,20 +10,28 @@ public class PauseScript : MonoBehaviour
 
     public GameObject pauseMenu, player;
 	public GameStateManager stateManager;
+	public ControllerFixes cFixes;
+	public bool paused;
 
 	void Start(){
-		Cursor.lockState = CursorLockMode.Locked;
-		Cursor.visible = false;
+		if (!cFixes.controllerUsed) {
+			Cursor.lockState = CursorLockMode.Locked;
+			Cursor.visible = false;
+		}
+		paused = false;
 	}
 
     void Update()
     {
+		if (paused && !cFixes.controllerUsed) {
+			SetCursorLockState (false);
+		}
         if (Input.GetButtonDown("Menu") && !pauseMenu.activeSelf)
         {
             pauseMenu.SetActive(true);
             player.GetComponent<FirstPersonController>().enabled = false;
 			stateManager.GamePaused = true;
-			SetCursorLockState (false);
+			paused = true;
             Time.timeScale = 0;
         }
         else if (Input.GetButtonDown("Menu") && pauseMenu.activeSelf)
@@ -32,6 +40,7 @@ public class PauseScript : MonoBehaviour
 			player.GetComponent<FirstPersonController>().enabled = true;
             pauseMenu.SetActive(false);
 			stateManager.GamePaused = false;
+			paused = false;
 			SetCursorLockState (true);
         }
     }
@@ -51,6 +60,7 @@ public class PauseScript : MonoBehaviour
 		player.GetComponent<FirstPersonController>().enabled = true;
 		pauseMenu.SetActive(false);
 		stateManager.GamePaused = false;
+		paused = false;
 		SetCursorLockState (true);
 	}
 

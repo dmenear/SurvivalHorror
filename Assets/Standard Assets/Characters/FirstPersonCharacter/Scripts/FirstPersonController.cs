@@ -15,6 +15,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 		public GameObject flashlight;
 		public AudioClip flashlight_on, flashlight_off, flicker;
 		public bool flashlightEnabled;
+		public bool sprint;
 
         [SerializeField] private bool m_IsWalking;
         [SerializeField] private float m_WalkSpeed;
@@ -23,7 +24,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private float m_JumpSpeed;
         [SerializeField] private float m_StickToGroundForce;
         [SerializeField] private float m_GravityMultiplier;
-        [SerializeField] private MouseLook m_MouseLook;
+        [SerializeField] public MouseLook m_MouseLook;
         [SerializeField] private bool m_UseFovKick;
         [SerializeField] private FOVKick m_FovKick = new FOVKick();
         [SerializeField] private bool m_UseHeadBob;
@@ -62,6 +63,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_AudioSource = GetComponent<AudioSource>();
 			m_MouseLook.Init(transform , m_Camera.transform);
 			flashlightEnabled = true;
+			sprint = false;
         }
 
 
@@ -69,7 +71,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private void Update()
         {
 			if (flashlightEnabled) {
-				if (Input.GetKeyDown (KeyCode.Q)) {
+				if (Input.GetButtonDown("Flashlight")) {
 					if (flashlight.activeSelf) {
 						flashlight.SetActive (false);
 						GetComponents<AudioSource> () [1].PlayOneShot (flashlight_off, 0.7f);
@@ -241,7 +243,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 #if !MOBILE_INPUT
             // On standalone builds, walk/run speed is modified by a key press.
             // keep track of whether or not the character is walking or running
-            m_IsWalking = !Input.GetKey(KeyCode.LeftShift);
+			m_IsWalking = !sprint;
 #endif
             // set the desired speed to be walking or running
             speed = m_IsWalking ? m_WalkSpeed : m_RunSpeed;
