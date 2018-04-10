@@ -7,6 +7,7 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class FlamethrowerControls : MonoBehaviour {
 
 	public Transform Environment;
+	public ControllerFixes cFixes;
 	public GameObject FlashLight, Fire, Player, TextBox;
 	public bool breakOnNextFire, breakActivated;
 	public GameObject[] Pieces;
@@ -24,12 +25,12 @@ public class FlamethrowerControls : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (assembled) {
-			if ((Input.GetButtonUp ("Shoot") || Input.GetAxis("ControllerShoot") == 0) && isActive && !breakOnNextFire) {
+			if ((Input.GetButtonUp ("Shoot") || (Input.GetAxis("ControllerShoot") == 0 && cFixes.controllerUsed)) && isActive && !breakOnNextFire) {
 				Fire.GetComponent<ParticleSystem> ().Stop ();
 				isActive = false;
 				audio.Stop ();
 				audio.enabled = false;
-			} else if ((Input.GetButtonDown ("Shoot") || Input.GetAxis("ControllerShoot") > 0) && !isActive) {
+			} else if ((Input.GetButtonDown ("Shoot") || (Input.GetAxis("ControllerShoot") > 0 && cFixes.controllerUsed)) && !isActive) {
 				if (breakOnNextFire && !breakActivated) {
 					breakActivated = true;
 					StartCoroutine (breakFlamethrower());

@@ -7,25 +7,23 @@ public class ChestHandler : MonoBehaviour {
 
 	public GameObject Player, Chest, TextBox, objectInChest;
 	public AudioClip Creak, LockedSound;
-	public bool chestOpen, mouseOver, chestLocked, DisplayingText;
-	public float Distance;
+	public InteractiveHandler IH;
+	public bool chestOpen, chestLocked, DisplayingText, timedUnlock;
 
 	void Start(){
 		chestOpen = false;
-		mouseOver = false;
+		timedUnlock = false;
 	}
 
 	void Update(){
-		Vector3 direction = Player.transform.position - this.transform.position;
-		Distance = direction.magnitude;
-		if (Distance <= 2.5f && !chestOpen && mouseOver) {
+		if (IH.Interactable.Contains(this.gameObject) && !chestOpen) {
 			if (Input.GetButtonDown ("Action")) {
 				if (!chestLocked) {
 					Chest.GetComponent<AudioSource> ().PlayOneShot (Creak, 0.7f);
 					Chest.GetComponent<Animator> ().SetBool ("isOpen", true);
 					chestOpen = true;
-					if (objectInChest != null && !objectInChest.activeSelf) {
-						objectInChest.SetActive (true);
+					if (objectInChest != null && !objectInChest.GetComponent<ObjectInChest>().ChestOpen) {
+						StartCoroutine (delayPickup());
 					}
 				} else {
 					if (!DisplayingText) {
@@ -40,16 +38,17 @@ public class ChestHandler : MonoBehaviour {
 	IEnumerator DisplayChestLocked(){
 		TextBox.GetComponent<Text> ().text = "This chest is locked.";
 		DisplayingText = true;
-		yield return new WaitForSecondsRealtime (3.0f);
+		yield return new WaitForSeconds (3.0f);
 		DisplayingText = false;
 		TextBox.GetComponent<Text> ().text = "";
 	}
 
-	void OnMouseEnter () {
-		mouseOver = true;
+	IEnumerator delayPickup(){
+		if (!timedUnlock) {
+			timedUnlock = true;
+			yield return new WaitForSeconds (0.2f);
+			objectInChest.GetComponent<ObjectInChest> ().ChestOpen = true;
+		}
 	}
 
-	void OnMouseExit(){
-		mouseOver = false;
-	}
 }

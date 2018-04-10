@@ -8,16 +8,12 @@ public class PickUpKey3 : MonoBehaviour {
 	public GameObject player, chest, keyMesh, textBox;
 	public AudioClip pickup;
 	public AudioSource audio;
-	public float distance, angle;
-	public bool onFloor = false;
+	public InteractiveHandler IH;
 	public bool pickedUp = false;
 
 	// Update is called once per frame
 	void Update () {
-		Vector3 direction = player.transform.position - this.transform.position;
-		angle = Vector3.Angle (direction, player.transform.forward);
-		distance = direction.magnitude;
-		if (angle >= 160 && distance <= (onFloor ? 2.3f : 2f) && !pickedUp) {
+		if (IH.Interactable.Contains(keyMesh) && !pickedUp) {
 			if(Input.GetButtonDown("Action")) {
 				audio.PlayOneShot (pickup, 0.7f);
 				displayMessage ();

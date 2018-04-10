@@ -7,17 +7,14 @@ public class PickUpKey2 : MonoBehaviour {
 
 	public GameObject player, textBox, monster, zoneExpansion, exitDoor, newDoor, skeleton, scareTrigger;
 	public GameObject[] keyMeshes, torches, torchLights, torchFlames;
+	public InteractiveHandler IH;
 	public AudioClip pickup;
 	public AudioSource audio;
-	public float distance, angle;
 	bool pickedUp = false;
 
 	// Update is called once per frame
 	void Update () {
-		Vector3 direction = player.transform.position - this.transform.position;
-		angle = Vector3.Angle (direction, player.transform.forward);
-		distance = direction.magnitude;
-		if (angle >= 160 && distance <= 3 && !pickedUp) {
+		if ((IH.Interactable.Contains(keyMeshes[0])||IH.Interactable.Contains(keyMeshes[1])) && !pickedUp) {
 			if(Input.GetButtonDown("Action")) {
 				audio.PlayOneShot (pickup, 0.7f);
 				displayMessage ();

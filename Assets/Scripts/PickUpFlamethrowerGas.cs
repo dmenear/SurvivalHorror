@@ -9,8 +9,7 @@ public class PickUpFlamethrowerGas : MonoBehaviour
     public GameObject player, textBox;
     public flamethrowerpartcounter ftpc;
     public AudioClip pickupSound;
-    public float distance, angle;
-    public bool onShelf = false;
+	public InteractiveHandler IH;
     public bool pickedUp = false;
 	AudioSource audio;
 
@@ -22,9 +21,7 @@ public class PickUpFlamethrowerGas : MonoBehaviour
     void Update()
     {
         Vector3 direction = player.transform.position - this.transform.position;
-        angle = Vector3.Angle(direction, player.transform.forward);
-        distance = direction.magnitude;
-        if (angle >= 160 && distance <= (onShelf ? 2.3f : 2f) && !pickedUp)
+		if (IH.Interactable.Contains(this.gameObject) && !pickedUp)
         {
             if (Input.GetButtonDown("Action"))
             {

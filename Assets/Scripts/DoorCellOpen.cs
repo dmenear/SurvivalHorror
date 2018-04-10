@@ -7,6 +7,7 @@ public class DoorCellOpen : MonoBehaviour {
 
 	public float Distance, Angle;
 	public GameObject Door, TextBox, Player;
+	public InteractiveHandler IH;
 
 	public AudioClip CreakSound, SlamSound, LockedSound, PrisonOpen, PrisonClose;
 	public bool DoorOpen = false, 
@@ -28,13 +29,9 @@ public class DoorCellOpen : MonoBehaviour {
 	}
 
 	void Update () {
-		Distance = PlayerCasting.DistanceFromTarget;
 		Vector3 direction = Player.transform.position - this.transform.position;
 		Angle = Vector3.SignedAngle (direction, this.transform.forward, Vector3.up);
-	}
-
-	void OnMouseOver (){
-		if (Distance <= 2.5 && !DoorOpen && !StateChanging) {
+		if (IH.Interactable.Contains(this.gameObject) && !DoorOpen && !StateChanging) {
 			if (Input.GetButtonDown ("Action")) {
 				if (!DoorLocked) {
 					if (IsPrison) {
@@ -62,7 +59,7 @@ public class DoorCellOpen : MonoBehaviour {
 					}
 				}
 			}
-		} else if(Distance <= 3.0 && DoorOpen && !StateChanging){
+		} else if(IH.Interactable.Contains(this.gameObject) && DoorOpen && !StateChanging){
 			if (Input.GetButtonDown ("Action")) {
 				if (DoorSlam) {
 					if (!CheckSpiderZone2.InZone) {
