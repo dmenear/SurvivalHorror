@@ -19,6 +19,9 @@ public class SlamBehind : MonoBehaviour {
 			if (door.GetComponent<DoorCellOpen>().Complete) {
 				StartCoroutine (door.GetComponent<DoorCellOpen>().endMusic ());
 				door.GetComponent<DoorCellOpen> ().DoorLocked = true;
+				if (door.GetComponent<Checkpoint2Checker> () != null) {
+					door.GetComponent<Checkpoint2Checker> ().doorFinished = true;
+				}
 			}
 			StartCoroutine (disableZone ());
 		}

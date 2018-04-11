@@ -10,7 +10,7 @@ public class PickUpKey2 : MonoBehaviour {
 	public InteractiveHandler IH;
 	public AudioClip pickup;
 	public AudioSource audio;
-	bool pickedUp = false;
+	public bool pickedUp = false;
 
 	// Update is called once per frame
 	void Update () {
