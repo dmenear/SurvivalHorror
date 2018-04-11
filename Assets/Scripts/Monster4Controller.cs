@@ -9,7 +9,7 @@ public class Monster4Controller : MonoBehaviour {
 	public MusicController Music;
 	public GameStateManager StateManager;
 	public GameObject[] zombies;
-	bool activated, waiting, jumpingDown, finishJump, itemsDropped, onFloor, walkBackwards;
+	bool activated, waiting, jumpingDown, finishJump, itemsDropped, onFloor, onPlatform, walkBackwards;
 	bool finishShouting, secondKeyObtained, hitPillar, pillarReactionStarted, killed;
 	Vector3 direction;
 	AudioSource pillarSound, audioJumpScare;
@@ -22,6 +22,7 @@ public class Monster4Controller : MonoBehaviour {
 		jumpingDown = false;
 		finishJump = false;
 		onFloor = false;
+		onPlatform = true;
 		finishShouting = false;
 		secondKeyObtained = false;
 		hitPillar = false;
@@ -41,6 +42,7 @@ public class Monster4Controller : MonoBehaviour {
 				if (SecondKey.GetComponent<PickUpKey1> ().pickedUp) {
 					secondKeyObtained = true;
 					StartCoroutine (waitBeforeJumping ());
+					onPlatform = false;
 				}
 			}
 		}
@@ -51,7 +53,7 @@ public class Monster4Controller : MonoBehaviour {
 		}
 		if (jumpingDown) {
 			this.transform.Translate (0, (finishJump ? -4.0f : -1.5f)  * Time.deltaTime, (finishJump ? 2.0f : 6.0f) * Time.deltaTime);
-		} else if (waiting) { //
+		} else if (waiting && onPlatform) {
 			GetComponent<Animator> ().SetBool ("isShouting", true);
 			StartCoroutine (shoutSound ());
 			StartCoroutine (waitForNextShout ());

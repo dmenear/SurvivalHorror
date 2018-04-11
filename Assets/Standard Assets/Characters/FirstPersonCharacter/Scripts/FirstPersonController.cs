@@ -87,7 +87,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 				}
 			}
 			if (flashlight.activeSelf) {
-				if (Random.Range (0, 3000) == 0) {
+				if (Random.Range (0, 7000) == 0) {
 					GetComponents<AudioSource>()[1].PlayOneShot (flicker, 0.7f);
 					flashlight.GetComponent<Animation> ().Play ("FlashlightFlicker");
 				}
