@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PickUpKey2 : MonoBehaviour {
 
-	public GameObject player, textBox, monster, zoneExpansion, exitDoor, newDoor, skeleton, scareTrigger;
+	public GameObject player, textBox, monster, zoneExpansion, exitZone, exitDoor, newDoor, skeleton, scareTrigger;
 	public GameObject[] keyMeshes, torches, torchLights, torchFlames;
 	public InteractiveHandler IH;
 	public AudioClip pickup;
@@ -19,7 +19,7 @@ public class PickUpKey2 : MonoBehaviour {
 				audio.PlayOneShot (pickup, 0.7f);
 				displayMessage ();
 				exitDoor.GetComponent<DoorCellOpen> ().DoorLocked = false;
-				exitDoor.GetComponent<DoorCellOpen> ().DoorSlam = true;
+				exitDoor.GetComponent<DoorCellOpen> ().SlamBehind = true;
 				exitDoor.GetComponent<DoorCellOpen> ().Complete = true;
 				newDoor.GetComponent<DoorCellOpen> ().DoorLocked = false;
 				foreach (GameObject keyMesh in keyMeshes) { 
@@ -29,6 +29,7 @@ public class PickUpKey2 : MonoBehaviour {
 				pickedUp = true;
 				monster.transform.position = monster.GetComponent<Monster2Controller> ().StartPosition;
 				zoneExpansion.SetActive (true);
+				exitZone.SetActive (true);
 				foreach (GameObject torch in torches) {
 					torch.GetComponent<FlameAnimations> ().enabled = false;
 				}

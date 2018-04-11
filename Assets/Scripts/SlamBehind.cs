@@ -16,13 +16,23 @@ public class SlamBehind : MonoBehaviour {
 			if (spider) {
 				StartCoroutine (playSpiderMusic ());
 			}
+			if (door.GetComponent<DoorCellOpen>().Complete) {
+				StartCoroutine (door.GetComponent<DoorCellOpen>().endMusic ());
+				door.GetComponent<DoorCellOpen> ().DoorLocked = true;
+			}
+			StartCoroutine (disableZone ());
 		}
 	}
 
 	IEnumerator playSpiderMusic(){
-		yield return new WaitForSecondsRealtime (1.0f);
+		yield return new WaitForSeconds (1.0f);
 		monster.GetComponent<Monster2Controller> ().Roar ();
-		yield return new WaitForSecondsRealtime (1.5f);
+		yield return new WaitForSeconds (1.5f);
 		music.changeToSpider ();
+	}
+
+	IEnumerator disableZone(){
+		yield return new WaitForSeconds (5.0f);
+		this.gameObject.SetActive (false);
 	}
 }

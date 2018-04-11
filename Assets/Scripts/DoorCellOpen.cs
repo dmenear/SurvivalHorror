@@ -74,6 +74,9 @@ public class DoorCellOpen : MonoBehaviour {
 						if (Complete) {
 							StartCoroutine (endMusic ());
 							GetComponent<DoorCellOpen> ().DoorLocked = true;
+							if (GetComponent<DoorCellOpen> ().SlamBehind) {
+								GetComponent<DoorCellOpen> ().SlamBehind = false;
+							}
 						}
 					}
 				} else {
@@ -97,7 +100,7 @@ public class DoorCellOpen : MonoBehaviour {
 		}
 	}
 
-	IEnumerator endMusic(){
+	public IEnumerator endMusic(){
 		yield return new WaitForSecondsRealtime (0.5f);
 		music.changeToAmbient ();
 	}

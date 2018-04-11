@@ -71,8 +71,22 @@ public class PauseScript : MonoBehaviour
 		CheckSpiderZone1.InZone = false;
 		CheckSpiderZone2.InZone = false;
 		CheckZombieZone.SafelyInZone = false;
+		PlayerPrefs.DeleteKey ("Checkpoint1Reached");
+		PlayerPrefs.DeleteKey ("Checkpoint2Reached");
+		PlayerPrefs.DeleteKey ("Checkpoint3Reached");
+		PlayerPrefs.DeleteKey ("Checkpoint4Reached");
         SceneManager.LoadScene("Scene001");
     }
+
+	public void RestartCheckpoint()
+	{
+		Time.timeScale = 1;
+		stateManager.GamePaused = false;
+		CheckSpiderZone1.InZone = false;
+		CheckSpiderZone2.InZone = false;
+		CheckZombieZone.SafelyInZone = false;
+		SceneManager.LoadScene("Scene001");
+	}
 
     public void ReturnToMainMenu()
     {
