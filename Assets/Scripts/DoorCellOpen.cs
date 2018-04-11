@@ -8,18 +8,20 @@ public class DoorCellOpen : MonoBehaviour {
 	public float Distance, Angle;
 	public GameObject Door, TextBox, Player;
 	public InteractiveHandler IH;
+	public FlamethrowerControls FTControls;
 
 	public AudioClip CreakSound, SlamSound, LockedSound, PrisonOpen, PrisonClose;
 	public bool DoorOpen = false, 
-				StateChanging = false,
-				DoorSlam = false,
-				DoorLocked = false,
-				DisplayingText = false,
-				SlamBehind = false,
-				IsPrison = false,
-				Complete = false,
-				SkeletonDoor = false,
-				openedOpposite = false;
+		StateChanging = false,
+		DoorSlam = false,
+		DoorLocked = false,
+		DisplayingText = false,
+		SlamBehind = false,
+		IsPrison = false,
+		Complete = false,
+		SkeletonDoor = false,
+		openedOpposite = false,
+		westMazeEntrance = false;
 	public MusicController music;
 
 	AudioSource audio;
@@ -39,6 +41,10 @@ public class DoorCellOpen : MonoBehaviour {
 						audio.PlayOneShot (PrisonOpen, 0.7f);
 						StartCoroutine (SetStateChanging (1.5f, true));
 					} else {
+						if (westMazeEntrance) {
+							StartCoroutine(FTControls.Disassemble ());
+							westMazeEntrance = false;
+						}
 						if (SkeletonDoor) {
 							music.turnOffMusic ();
 						}

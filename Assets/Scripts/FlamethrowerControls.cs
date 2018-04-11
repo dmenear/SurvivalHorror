@@ -43,28 +43,30 @@ public class FlamethrowerControls : MonoBehaviour {
 		}
 	}
 
-	IEnumerator Disassemble(){
-		Fire.GetComponent<ParticleSystem> ().Stop ();
-		isActive = false;
-		audio.Stop ();
-		audio.enabled = false;
-		assembled = false;
-		foreach (GameObject child in Pieces) {
-			child.transform.SetParent (Environment);
-			child.gameObject.GetComponent<Rigidbody> ().isKinematic = false;
-			if (child.gameObject.GetComponent<MeshCollider> () != null) {
-				child.gameObject.GetComponent<MeshCollider> ().enabled = true;
-			} else if (child.gameObject.GetComponent<SphereCollider> () != null) {
-				child.gameObject.GetComponent<SphereCollider> ().enabled = true;
-			} else {
-				child.gameObject.GetComponent<BoxCollider> ().enabled = true;
+	public IEnumerator Disassemble(){
+		if (assembled && this.gameObject.activeSelf) {
+			Fire.GetComponent<ParticleSystem> ().Stop ();
+			isActive = false;
+			audio.Stop ();
+			audio.enabled = false;
+			assembled = false;
+			foreach (GameObject child in Pieces) {
+				child.transform.SetParent (Environment);
+				child.gameObject.GetComponent<Rigidbody> ().isKinematic = false;
+				if (child.gameObject.GetComponent<MeshCollider> () != null) {
+					child.gameObject.GetComponent<MeshCollider> ().enabled = true;
+				} else if (child.gameObject.GetComponent<SphereCollider> () != null) {
+					child.gameObject.GetComponent<SphereCollider> ().enabled = true;
+				} else {
+					child.gameObject.GetComponent<BoxCollider> ().enabled = true;
+				}
 			}
+			FlashLight.SetActive (false);
+			Player.GetComponent<FirstPersonController> ().flashlightEnabled = true;
+			TextBox.GetComponent<Text> ().text = "Your flamethrower fell apart.";
+			yield return new WaitForSeconds (4.0f);
+			TextBox.GetComponent<Text> ().text = "";
 		}
-		FlashLight.SetActive (false);
-		Player.GetComponent<FirstPersonController> ().flashlightEnabled = true;
-		TextBox.GetComponent<Text>().text = "Your flamethrower fell apart.";
-		yield return new WaitForSeconds (4.0f);
-		TextBox.GetComponent<Text>().text = "";
 	}
 
 	IEnumerator breakFlamethrower(){

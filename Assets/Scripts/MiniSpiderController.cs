@@ -10,6 +10,7 @@ public class MiniSpiderController : MonoBehaviour {
 	public GameObject Player, WPAttack, WPReturn, FlamethrowerFlame, SpiderMesh, JumpScare, TextBox, Flamethrower;
 	public GameObject[] PanicWaypoints;
 	public ParticleSystem Flame, Smoke;
+	public Checkpoint3Checker C3C;
 	public Material burnedMat;
 	public float posAccuracy = 0.5f, rotSpeed = 4.0f, rotAccuracy = 6.0f;
 	public float walkSpeed = 3.0f, chaseSpeed = 7.5f, panicSpeed = 8.5f, diff;
@@ -83,6 +84,7 @@ public class MiniSpiderController : MonoBehaviour {
 						anim.speed = 1.0f;
 						anim.SetBool ("isChasing", false);
 						anim.SetBool ("isDying", true);
+						C3C.spiderDead = true;
 						dead = true;
 						if (!fireDieStarted) {
 							audio.PlayOneShot (death, 0.4f);

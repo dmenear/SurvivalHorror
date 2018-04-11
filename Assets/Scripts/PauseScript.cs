@@ -74,7 +74,6 @@ public class PauseScript : MonoBehaviour
 		PlayerPrefs.DeleteKey ("Checkpoint1Reached");
 		PlayerPrefs.DeleteKey ("Checkpoint2Reached");
 		PlayerPrefs.DeleteKey ("Checkpoint3Reached");
-		PlayerPrefs.DeleteKey ("Checkpoint4Reached");
         SceneManager.LoadScene("Scene001");
     }
 

@@ -10,6 +10,9 @@ public class MainMenu : MonoBehaviour {
 	void Start(){
 		Cursor.visible = true;
 		Cursor.lockState = CursorLockMode.None;
+		PlayerPrefs.DeleteKey ("Checkpoint1Reached");
+		PlayerPrefs.DeleteKey ("Checkpoint2Reached");
+		PlayerPrefs.DeleteKey ("Checkpoint3Reached");
 	}
 
 	public void StartGame(){

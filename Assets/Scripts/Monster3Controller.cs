@@ -8,6 +8,7 @@ public class Monster3Controller : MonoBehaviour {
 	public GameObject[] waypoints;
 	public GameStateManager stateManager;
 	public AudioClip jumpScareSound;
+	public MusicController Music;
 	AudioSource audio;
 	float accuracy = 2.5f;
 	float distanceToWP;
@@ -228,6 +229,7 @@ public class Monster3Controller : MonoBehaviour {
 			GetComponent<AudioSource> ().enabled = false;
 			audio.PlayOneShot (jumpScareSound, 1.3f);
 			stateManager.EndGame ();
+			Music.audio.Stop ();
 		}
 	}
 }

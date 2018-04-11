@@ -7,16 +7,12 @@ public class VictoryDoor : MonoBehaviour {
 
 	public GameObject Door, TextBox;
 	public AudioClip DoorCreak, LockedSound;
-	public float Distance;
 	public GameStateManager StateManager;
+	public InteractiveHandler IH;
 	public bool DoorLocked = true, DisplayingText = false;
-	
-	void Update () {
-		Distance = PlayerCasting.DistanceFromTarget;
-	}
 
-	void OnMouseOver (){
-		if (Distance <= 2.5) {
+	void Update (){
+		if (IH.Interactable.Contains(this.gameObject)) {
 			if (Input.GetButtonDown ("Action")) {
 				if (DoorLocked) {
 					if (!DisplayingText) {
