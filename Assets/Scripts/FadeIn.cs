@@ -17,7 +17,9 @@ public class FadeIn : MonoBehaviour {
 		yield return new WaitForSecondsRealtime (2.5f);
 		FadeScreenIn.SetActive(false);
 		ThePlayer.GetComponent<FirstPersonController> ().enabled = true;
-		Controls.SetActive (true);
+		if (PlayerPrefs.GetInt ("Checkpoint1Reached") != 1) {
+			Controls.SetActive (true);
+		}
 		TextBox.GetComponent<Text>().text = "";
 	}
 }
