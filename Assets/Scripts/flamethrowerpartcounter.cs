@@ -42,20 +42,22 @@ public class flamethrowerpartcounter : MonoBehaviour {
 
     IEnumerator displayMessage()
     {
-        yield return new WaitForSecondsRealtime(2.0f);
+        yield return new WaitForSeconds(3.1f);
         textBox.GetComponent<Text>().text = "Constructing Flamethrower...";
         audio.PlayOneShot(crafting, 0.7f);
-        yield return new WaitForSecondsRealtime(6.0f);
+        yield return new WaitForSeconds(6.0f);
         audio.PlayOneShot(gas, 0.7f);
-        yield return new WaitForSecondsRealtime(2.0f);
+        yield return new WaitForSeconds(2.0f);
         textBox.GetComponent<Text>().text = "";
         textBox.GetComponent<Text>().text = "Flamethrower complete";
         audio.PlayOneShot(drawFlamethrower, 0.7f);
-        yield return new WaitForSecondsRealtime(1.0f);
+        yield return new WaitForSeconds(1.0f);
         textBox.GetComponent<Text>().text = "";
         flamethrower.SetActive(true);
         overlay.SetActive(false);
 		fpsController.GetComponent<FirstPersonController> ().flashlightEnabled = false;
+		fpsController.GetComponent<CharacterController> ().radius = 0.6f;
+		fpsController.GetComponent<CharacterController> ().center = new Vector3(0.0f, 0.0f, 0.45f);
     }
 
 

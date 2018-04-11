@@ -9,6 +9,7 @@ public class Monster1Controller : MonoBehaviour {
 	public GameObject DoorTrigger, JumpScare;
 	public MusicController Music;
 	public GameStateManager StateManager;
+	public float rotSpeed = 3.0f;
 
 	Animator anim;
 	string state = "idle";
@@ -43,7 +44,7 @@ public class Monster1Controller : MonoBehaviour {
 			}
 			anim.SetBool ("isIdle", false);
 			anim.SetBool ("isWalking", true);
-			this.transform.rotation = Quaternion.Slerp (this.transform.rotation, Quaternion.LookRotation (direction), 0.1f);
+			this.transform.rotation = Quaternion.Slerp (this.transform.rotation, Quaternion.LookRotation (direction), rotSpeed * Time.deltaTime);
 			this.transform.Translate (0, 0, followSpeed * Time.deltaTime);
 		}
 		else {
@@ -64,7 +65,7 @@ public class Monster1Controller : MonoBehaviour {
 	}
 
 	IEnumerator periodicSound(){
-		yield return new WaitForSecondsRealtime (4f);
+		yield return new WaitForSeconds (4f);
 		int sound = Random.Range (0, 3);
 		switch (sound) {
 		case 0:

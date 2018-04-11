@@ -7,7 +7,7 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class MiniSpiderController : MonoBehaviour {
 
 
-	public GameObject Player, WPAttack, WPReturn, FlamethrowerFlame, SpiderMesh, JumpScare, TextBox, Flamethrower;
+	public GameObject Player, WPAttack, WPReturn, FlamethrowerFlame, SpiderMesh, JumpScare, TextBox;
 	public GameObject[] PanicWaypoints;
 	public ParticleSystem Flame, Smoke;
 	public Checkpoint3Checker C3C;
@@ -66,7 +66,6 @@ public class MiniSpiderController : MonoBehaviour {
 					this.transform.Translate (0, 0, panicSpeed * Time.deltaTime);
 					if (direction.magnitude < 0.7f) {
 						panicWP1Reached = true;
-						Flamethrower.GetComponent<FlamethrowerControls> ().breakOnNextFire = true;
 					}
 				} else {
 					if (panicID < PanicWaypoints.Length) {

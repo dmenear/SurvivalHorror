@@ -23,10 +23,10 @@ public class FlashlightScare : MonoBehaviour {
 	IEnumerator playScare(){
 		Flashlight.GetComponent<Animation> ().Play ("FlashlightFlicker");
 		Player.GetComponents<AudioSource>()[1].PlayOneShot (Flicker, 0.7f);
-		yield return new WaitForSecondsRealtime (0.3f);
+		yield return new WaitForSeconds (0.3f);
 		Flashlight.GetComponent<Light> ().enabled = false;
 		Skeleton.SetActive (false);
-		yield return new WaitForSecondsRealtime (5.0f);
+		yield return new WaitForSeconds (5.0f);
 		Flashlight.SetActive (true);
 		Flashlight.GetComponent<Light> ().enabled = true;
 		Player.GetComponents<AudioSource>()[1].PlayOneShot (Flicker, 0.7f);

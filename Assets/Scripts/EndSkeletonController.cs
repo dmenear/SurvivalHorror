@@ -63,11 +63,13 @@ public class EndSkeletonController : MonoBehaviour {
 		Jaw.transform.localEulerAngles = Vector3.Lerp(currentRotation, newRotation, 7.0f * Time.deltaTime);
 	}
 
-	void OnTriggerEnter(){
-		snap = true;
-		if (!triggered) {
-			StartCoroutine (snapSequence ());
-			triggered = true;
+	void OnTriggerEnter(Collider other){
+		if (other.gameObject == Player.gameObject) {
+			snap = true;
+			if (!triggered) {
+				StartCoroutine (snapSequence ());
+				triggered = true;
+			}
 		}
 	}
 

@@ -10,6 +10,7 @@ public class FinalZombieController : MonoBehaviour {
 	public MusicController Music;
 	public GameStateManager StateManager;
 	public bool FastZombie, Activated;
+	public float rotSpeed = 3.0f;
 
 	Animator anim;
 	float followSpeed;
@@ -34,7 +35,7 @@ public class FinalZombieController : MonoBehaviour {
 	void Update () {
 		Vector3 direction = Player.position - this.transform.position;
 		direction.y = 0;
-		this.transform.rotation = Quaternion.Slerp (this.transform.rotation, Quaternion.LookRotation (direction), 0.1f);
+		this.transform.rotation = Quaternion.Slerp (this.transform.rotation, Quaternion.LookRotation (direction), rotSpeed * Time.deltaTime);
 		if (Activated) {
 			if (!roared) {
 				if (FastZombie) {
@@ -64,7 +65,7 @@ public class FinalZombieController : MonoBehaviour {
 	}
 
 	IEnumerator periodicSound(){
-		yield return new WaitForSecondsRealtime (Random.Range(4.0f, 8.0f));
+		yield return new WaitForSeconds (Random.Range(4.0f, 8.0f));
 		int sound = Random.Range (0, 3);
 		switch (sound) {
 		case 0:
@@ -87,7 +88,7 @@ public class FinalZombieController : MonoBehaviour {
 	}
 
 	IEnumerator delayRoar(){
-		yield return new WaitForSecondsRealtime (2.7f);
+		yield return new WaitForSeconds (2.7f);
 		audio.PlayOneShot (Roar1, 0.6f);
 	}
 		

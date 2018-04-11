@@ -70,6 +70,7 @@ public class Monster2Controller : MonoBehaviour {
 
 	IEnumerator upCloseSound(){
 		audio.PlayOneShot (SpiderUpClose, 0.5f);
-		yield return new WaitForSecondsRealtime (10.0f);
+		yield return new WaitForSeconds (10.0f);
+		upClosePlayed = false;
 	}
 }

@@ -10,7 +10,7 @@ public class PickUpFlamethrower : MonoBehaviour
     public AudioClip pickupAudio;
     public flamethrowerpartcounter ftpc;
 	public InteractiveHandler IH;
-    public bool pickedUp = false;
+    public bool pickedUp = false, delayPickup = false;
 	AudioSource audio;
 
 	void Start(){
@@ -20,7 +20,14 @@ public class PickUpFlamethrower : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if (IH.Interactable.Contains(this.gameObject) && !pickedUp)
+		if (GetComponent<ObjectInChest> () != null) {
+			if(GetComponent<ObjectInChest>().ChestOpen){
+				delayPickup = false;
+			} else{
+				delayPickup = true;
+			}
+		}
+		if (IH.Interactable.Contains(this.gameObject) && !pickedUp && !delayPickup)
         {
             if (Input.GetButtonDown("Action"))
             {
@@ -42,7 +49,7 @@ public class PickUpFlamethrower : MonoBehaviour
     IEnumerator displayMessage()
     {
         textBox.GetComponent<Text>().text = "Picked up Flamethrower Body";
-        yield return new WaitForSecondsRealtime(3.0f);
+        yield return new WaitForSeconds(3.0f);
         textBox.GetComponent<Text>().text = "";
         gameObject.SetActive(false);
     }

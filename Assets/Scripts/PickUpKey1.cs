@@ -9,12 +9,19 @@ public class PickUpKey1 : MonoBehaviour {
 	public InteractiveHandler IH;
 	public AudioClip pickup;
 	public AudioSource audio;
-	public bool pickedUp = false;
+	public bool pickedUp = false, delayPickup = false;
 	public bool finalWestKey = false;
 
 	// Update is called once per frame
 	void Update () {
-		if (IH.Interactable.Contains(keyMesh) && !pickedUp) {
+		if (GetComponent<ObjectInChest> () != null) {
+			if(GetComponent<ObjectInChest>().ChestOpen){
+				delayPickup = false;
+			} else{
+				delayPickup = true;
+			}
+		}
+		if (IH.Interactable.Contains(keyMesh) && !pickedUp && !delayPickup) {
 			if(Input.GetButtonDown("Action")) {
 				audio.PlayOneShot (pickup, 0.7f);
 				displayMessage ();
@@ -38,7 +45,7 @@ public class PickUpKey1 : MonoBehaviour {
 
 	IEnumerator displayMessage(){
 		textBox.GetComponent<Text> ().text = "You found a door key.";
-		yield return new WaitForSecondsRealtime (3.0f);
+		yield return new WaitForSeconds (3.0f);
 		textBox.GetComponent<Text> ().text = "";
 		gameObject.SetActive (false);
 	}
